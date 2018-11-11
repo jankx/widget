@@ -12,7 +12,7 @@ $widgets_dir = dirname( FOXY_WIDGETS_LOADER_FILE );
 
 spl_autoload_register(
 	function( $class_name ) use ( $widgets_dir ) {
-		$widget_file = sprintf( '%s/inc/class-%s.php', $widgets_dir, foxy_make_slug( $class_name ) );
+		$widget_file = sprintf( '%s/inc/class-%s.php', $widgets_dir, preg_replace( '/_/', '-', sanitize_title( $class_name ) ) );
 		if ( file_exists( $widget_file ) ) {
 			require_once $widget_file;
 		}
