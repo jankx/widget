@@ -43,7 +43,7 @@ class Foxy_Widget_Videos extends WP_Widget {
 		$options = array();
 		$embed = new Foxy_Embed( $instance['video_url'], $options );
 		$embed->content();
-		echo '</a>';
+		echo '</div>';
 		echo $args['after_widget'];
 	}
 }
