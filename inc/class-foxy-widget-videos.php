@@ -22,7 +22,7 @@ class Foxy_Widget_Videos extends WP_Widget {
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset( $instance['title'] ) ? $instance['title'] : ''; ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'video_url' ); ?>"><?php _e( 'Video URL', 'foxy' ) ?></label>
+			<label for="<?php echo $this->get_field_id( 'video_url' ); ?>"><?php _e( 'Video URL', 'foxy' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'video_url' ); ?>" name="<?php echo $this->get_field_name( 'video_url' ); ?>" value="<?php echo isset( $instance['video_url'] ) ? $instance['video_url'] : ''; ?>">
 		</p>
 		<?php
@@ -34,14 +34,16 @@ class Foxy_Widget_Videos extends WP_Widget {
 		}
 
 		echo $args['before_widget'];
-		if ( ! empty($instance['title'] ) ) {
+		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . $instance['title'] . $args['after_title'];
 		}
-		Foxy::ui()->tag(array(
-			'class' => 'video-embebd',
-		));
+		Foxy::ui()->tag(
+			array(
+				'class' => 'video-embebd',
+			)
+		);
 		$options = array();
-		$embed = new Foxy_Embed( $instance['video_url'], $options );
+		$embed   = new Foxy_Embed( $instance['video_url'], $options );
 		$embed->content();
 		echo '</div>';
 		echo $args['after_widget'];

@@ -16,13 +16,13 @@ class Foxy_Widget_Ads extends WP_Widget {
 
 	public function form( $instance ) {
 		$ads_is_supported = apply_filters( 'foxy_ads_type_supports', array( 'html', 'adsendse', 'banner', 'link' ) );
-		if ( ! isset ( $instance['hide_title'] ) ) {
+		if ( ! isset( $instance['hide_title'] ) ) {
 			$instance['hide_title'] = '';
 		}
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title' ); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset($instance['title']) ? $instance['title'] : ''; ?>">
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset( $instance['title'] ) ? $instance['title'] : ''; ?>">
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'ads_type' ); ?>"><?php _e( 'Ads Type', 'foxy' ); ?></label>

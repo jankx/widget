@@ -19,7 +19,7 @@ class Foxy_Widget_Posts extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title' ); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset($instance['title']) ? $instance['title'] : ''; ?>">
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset( $instance['title'] ) ? $instance['title'] : ''; ?>">
 		</p>
 		<?php
 			Foxy_Admin_UI_Common::instance()
@@ -33,8 +33,8 @@ class Foxy_Widget_Posts extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		$post_args = array(
-			'post_type' => 'post',
+		$post_args    = array(
+			'post_type'      => 'post',
 			'posts_per_page' => 5,
 		);
 		$use_carousel = isset( $instance['use_carousel'] ) && $instance['use_carousel'] == 'use';
@@ -50,7 +50,7 @@ class Foxy_Widget_Posts extends WP_Widget {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title']; // WPCS: XSS ok.
 		}
 		$layout_args = array(
-			'style' => 'card',
+			'style'    => 'card',
 			'carousel' => $use_carousel,
 		);
 		Foxy::post_layout( $layout_args, $posts, array_merge( $args, $instance ) );
