@@ -23,11 +23,11 @@ class Foxy_Widget_Posts extends WP_Widget {
 		</p>
 		<?php
 			Foxy_Admin_UI_Common::instance()
-				->widget_post_layout( $this, $instance );
+				->widget_post_common( $this, $instance );
 		?>
 		<p>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'use_carousel' ); ?>" name="<?php echo $this->get_field_name( 'use_carousel' ); ?>" value="use" <?php checked( 'use', $use_carousel ); ?>>
-			<label for="<?php echo $this->get_field_id( 'use_carousel' ); ?>"><?php _e( 'Use Carousel', 'fx-real-estate' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'use_carousel' ); ?>"><?php _e( 'Use Carousel', 'foxy-real-estate' ); ?></label>
 		</p>
 		<?php
 	}
@@ -35,7 +35,7 @@ class Foxy_Widget_Posts extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$post_args    = array(
 			'post_type'      => 'post',
-			'posts_per_page' => 5,
+			'posts_per_page' => array_get( $instance, 'posts_per_page', 5, true ),
 		);
 		$use_carousel = isset( $instance['use_carousel'] ) && $instance['use_carousel'] == 'use';
 
