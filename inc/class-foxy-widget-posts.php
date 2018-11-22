@@ -21,6 +21,27 @@ class Foxy_Widget_Posts extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo isset( $instance['title'] ) ? $instance['title'] : ''; ?>">
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Categories' ); ?></label>
+			<select name="category" id="" multiple="multiple" class="widefat">
+				<?php foreach( get_categories( array(
+					'hide_empty' => false
+				) ) as $category ): ?>
+				<option value="<?php echo $category->term_id ?>"><?php echo $category->name; ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'tag' ); ?>"><?php _e( 'Tags' ) ?></label>
+			<select name="<?php echo $this->get_field_name( 'tag' ); ?>[]" id="<?php echo $this->get_field_id( 'tag' ); ?>" class="widefat" multiple="multiple">
+			<?php foreach( get_tags( array( 'hide_empty' => true ) ) as $tag ): ?>
+				<option value="<?php echo $tag->term_id; ?>"<?php echo  selected(
+					true,
+					in_array( $tag->term_id, array_get( $instance, 'tag', array() ), true )
+				) ?>><?php echo $tag->name; ?></option>
+			<?php endforeach; ?>
+			</select>
+		</p>
 		<?php
 			Foxy_Admin_UI_Common::instance()
 				->widget_post_common( $this, $instance );
