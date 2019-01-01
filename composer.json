@@ -1,0 +1,17 @@
+{
+    "name": "foxy-theme-framework/widgets",
+    "description": "Widgets for Foxy theme framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "WPClouds",
+            "email": "foxy@wpclouds.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": [
+            "widgets.php"
+        ]
+    }
+}
