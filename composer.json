@@ -1,17 +1,15 @@
 {
-    "name": "foxy-theme-framework/widgets",
-    "description": "Widgets for Foxy theme framework",
+    "name": "jankx/widgets",
+    "description": "Common widgets are developed specifically for Jankx theme framework",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "WPClouds",
-            "email": "foxy@wpclouds.com"
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
         }
     ],
-    "require": {},
-    "autoload": {
-        "files": [
-            "widgets.php"
-        ]
+    "require": {
+        "jankx/core": "dev-master"
     }
 }
