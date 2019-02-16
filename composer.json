@@ -1,15 +1,16 @@
 {
-    "name": "jankx/widgets",
-    "description": "Common widgets are developed specifically for Jankx theme framework",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Puleeno Nguyen",
-            "email": "puleeno@gmail.com"
-        }
-    ],
-    "require": {
-        "jankx/core": "dev-master"
+  "name": "jankx/widgets",
+  "description": "Common widgets are developed specifically for Jankx theme framework",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Puleeno Nguyen",
+      "email": "puleeno@gmail.com"
     }
+  ],
+  "require": {
+    "jankx/core": "dev-master"
+  }
 }
