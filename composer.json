@@ -16,9 +16,6 @@
   "autoload": {
     "psr-4": {
       "Jankx\\Widgets\\": "src/"
-    },
-    "files": [
-      "init.php"
-    ]
+    }
   }
 }
