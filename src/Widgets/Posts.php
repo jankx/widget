@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\Widgets\Widgets;
+namespace Jankx\Widget\Widget;
 
 class Posts extends \WP_Widget
 {

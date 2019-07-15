@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\Widgets\Widgets;
+namespace Jankx\Widget\Widget;
 
 class CategoryPosts extends \WP_Widget
 {

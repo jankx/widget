@@ -1,6 +1,6 @@
 <?php
 
-namespace Jankx\Widgets;
+namespace Jankx\Widget;
 
 class Filter
 {
