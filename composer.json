@@ -1,5 +1,5 @@
 {
-  "name": "jankx/widgets",
+  "name": "jankx/widget",
   "description": "Common widgets are developed specifically for Jankx theme framework",
   "type": "library",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Jankx\\Widgets\\": "src/"
+      "Jankx\\Widget\\": "src/"
     }
   }
 }
