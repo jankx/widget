@@ -12,14 +12,6 @@ class PostsRenderer extends Base
 
     protected $layout = PostLayoutManager::LIST;
 
-    public function setShowImage($value)
-    {
-        $this->options['show_image'] = $value;
-    }
-    public function setShowExpert($value)
-    {
-        $this->options['show_excerpt'] = $value;
-    }
     public function setCategories($value)
     {
         $this->categories = $value;
@@ -28,10 +20,7 @@ class PostsRenderer extends Base
     {
         $this->tags = $value;
     }
-    public function setHeaderText($value)
-    {
-        $this->options['header_text'] = $value;
-    }
+
     public function setLayout($value)
     {
         $this->layout = $value;
@@ -42,8 +31,20 @@ class PostsRenderer extends Base
         $args = array(
             'post_type' => 'post',
         );
-        return new WP_Query(
-            $args
+
+        if (!empty($this->categories)) {
+            $args['category__in'] = $this->categories;
+        }
+        if (!empty($this->tags)) {
+            $args['tag__in'] = $this->tags;
+        }
+
+        $args['posts_per_page'] = array_get($this->options, 'limit', 10 );
+
+        return apply_filters(
+            'jankx_widget_post_renderer_make_query',
+            new WP_Query($args),
+            $this->options
         );
     }
 
