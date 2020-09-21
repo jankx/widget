@@ -12,7 +12,8 @@ abstract class Base implements Renderer
         return (string) $this->render();
     }
 
-    public function setOption($optionName, $optionValue) {
+    public function setOption($optionName, $optionValue)
+    {
         $this->options[$optionName] = $optionValue;
     }
 
