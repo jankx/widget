@@ -26,11 +26,21 @@ class PostsRenderer extends Base
         $this->layout = $value;
     }
 
+    public function validateTaxonomies() {
+        if (is_string($this->tags) && $this->tags == 'none') {
+            $this->tags = false;
+        }
+        if (is_string($this->categories) && $this->categories == 'none') {
+            $this->categories = false;
+        }
+    }
+
     public function getQuery()
     {
         $args = array(
             'post_type' => 'post',
         );
+        $this->validateTaxonomies();
 
         if (!empty($this->categories)) {
             $args['category__in'] = $this->categories;
