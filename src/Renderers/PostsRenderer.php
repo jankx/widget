@@ -27,6 +27,7 @@ class PostsRenderer extends Base
     }
 
     public function validateTaxonomies() {
+        // `none` value's Elementor
         if (is_string($this->tags) && $this->tags == 'none') {
             $this->tags = false;
         }
