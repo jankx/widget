@@ -10,7 +10,7 @@ class PostsRenderer extends Base
     protected $tags = array();
     protected $options = array();
 
-    protected $layout = PostLayoutManager::LIST;
+    protected $layout = PostLayoutManager::LIST_LAYOUT;
 
     public function setCategories($value)
     {
