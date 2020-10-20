@@ -50,7 +50,7 @@ class PostsRenderer extends Base
             $args['tag__in'] = $this->tags;
         }
 
-        $args['posts_per_page'] = array_get($this->options, 'limit', 10);
+        $args['posts_per_page'] = array_get($this->options, 'posts_per_page', 10);
 
         return apply_filters(
             'jankx_widget_post_renderer_make_query',
