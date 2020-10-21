@@ -59,6 +59,13 @@ class PostsRenderer extends Base
         );
     }
 
+    public function excerptLenght($length) {
+        if (isset($this->options['excerpt_length'])) {
+            return $this->options['excerpt_length'];
+        }
+        return $length;
+    }
+
     public function render()
     {
         $layoutManager = PostLayoutManager::getInstance();
@@ -71,6 +78,14 @@ class PostsRenderer extends Base
 
         $postLayout->setOptions($this->options);
 
-        return $postLayout->render();
+        if (array_get($this->options, 'show_excerpt', false)) {
+            add_filter('excerpt_length', array($this, 'excerptLenght'));
+        }
+        $renderedLayout = $postLayout->render();
+        if (array_get($this->options, 'show_excerpt', false)) {
+            remove_filter('excerpt_length', array($this, 'excerptLenght'));
+        }
+
+        return $renderedLayout;
     }
 }
