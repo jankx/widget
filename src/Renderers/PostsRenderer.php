@@ -66,6 +66,16 @@ class PostsRenderer extends Base
         return $length;
     }
 
+    protected function createPostMetaFeatures() {
+        $metas = array();
+
+        if (array_get($this->options, 'show_postdate')) {
+            $metas['post_date'] = get_the_date(get_option('date_format'));
+        }
+
+        return $metas;
+    }
+
     public function render()
     {
         $layoutManager = PostLayoutManager::getInstance();
@@ -74,8 +84,12 @@ class PostsRenderer extends Base
             _e('Please choose your post layout', 'jankx');
             return;
         }
-        $postLayout    = new $layoutCls($this->getQuery());
 
+        $postLayout = new $layoutCls($this->getQuery());
+        $this->setOption(
+            'post_meta_features',
+            $this->createPostMetaFeatures()
+        );
         $postLayout->setOptions($this->options);
 
         if (array_get($this->options, 'show_excerpt', false)) {
