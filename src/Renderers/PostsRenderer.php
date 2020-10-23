@@ -26,7 +26,8 @@ class PostsRenderer extends Base
         $this->layout = $value;
     }
 
-    public function validateTaxonomies() {
+    public function validateTaxonomies()
+    {
         // `none` value's Elementor
         if (is_string($this->tags) && $this->tags == 'none') {
             $this->tags = false;
@@ -59,14 +60,16 @@ class PostsRenderer extends Base
         );
     }
 
-    public function excerptLenght($length) {
+    public function excerptLenght($length)
+    {
         if (isset($this->options['excerpt_length'])) {
             return $this->options['excerpt_length'];
         }
         return $length;
     }
 
-    protected function createPostMetaFeatures() {
+    protected function createPostMetaFeatures()
+    {
         $metas = array();
 
         if (array_get($this->options, 'show_postdate')) {
