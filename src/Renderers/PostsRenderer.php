@@ -39,7 +39,7 @@ class PostsRenderer extends Base
     public function getQuery()
     {
         $args = array(
-            'post_type' => 'post',
+            'post_type' => array_get($this->options, 'post_type', 'post'),
         );
         $this->validateTaxonomies();
 
