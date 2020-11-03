@@ -71,11 +71,9 @@ class PostsRenderer extends Base
     protected function createPostMetaFeatures()
     {
         $metas = array();
-
         if (array_get($this->options, 'show_postdate')) {
-            $metas['post_date'] = get_the_date(get_option('date_format'));
+            $metas['post_date'] = true;
         }
-
         return $metas;
     }
 
