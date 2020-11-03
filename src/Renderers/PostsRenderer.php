@@ -9,8 +9,14 @@ class PostsRenderer extends Base
     protected $categories = array();
     protected $tags = array();
     protected $options = array();
-
+    protected $wp_query;
     protected $layout = PostLayoutManager::LIST_LAYOUT;
+
+    public function __construct($wp_query = null) {
+        if (!is_null($wp_query)) {
+            $this->wp_query = $wp_query;
+        }
+    }
 
     public function setCategories($value)
     {
@@ -39,25 +45,33 @@ class PostsRenderer extends Base
 
     public function getQuery()
     {
-        $args = array(
-            'post_type' => array_get($this->options, 'post_type', 'post'),
-        );
-        $this->validateTaxonomies();
+        if (is_null($this->wp_query)) {
+            $args = array(
+                'post_type' => array_get($this->options, 'post_type', 'post'),
+            );
+            $this->validateTaxonomies();
 
-        if (!empty($this->categories)) {
-            $args['category__in'] = $this->categories;
+            if (!empty($this->categories)) {
+                $args['category__in'] = $this->categories;
+            }
+            if (!empty($this->tags)) {
+                $args['tag__in'] = $this->tags;
+            }
+
+            $args['posts_per_page'] = array_get($this->options, 'posts_per_page', 10);
+            $this->wp_query = apply_filters(
+                'jankx_widget_post_renderer_make_query',
+                new WP_Query($args),
+                $this->options
+            );
         }
-        if (!empty($this->tags)) {
-            $args['tag__in'] = $this->tags;
+        return $this->wp_query;
+    }
+
+    public function setQuery($query) {
+        if (is_a($query, \WP_Query::class)) {
+            $this->wp_query = $query;
         }
-
-        $args['posts_per_page'] = array_get($this->options, 'posts_per_page', 10);
-
-        return apply_filters(
-            'jankx_widget_post_renderer_make_query',
-            new WP_Query($args),
-            $this->options
-        );
     }
 
     public function excerptLenght($length)
