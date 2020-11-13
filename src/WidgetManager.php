@@ -1,6 +1,8 @@
 <?php
 namespace Jankx\Widget;
 
+use Jankx\Widget\Widgets\Posts;
+
 class WidgetManager
 {
     protected static $instance;
@@ -19,5 +21,6 @@ class WidgetManager
 
     public function registerWidgets()
     {
+        register_widget(Posts::class);
     }
 }

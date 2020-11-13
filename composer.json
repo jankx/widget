@@ -11,7 +11,8 @@
     }
   ],
   "require": {
-    "jankx/post-layout": "dev-master"
+    "jankx/post-layout": "dev-master",
+    "jankx/helpers": "dev-master"
   },
   "autoload": {
     "psr-4": {
