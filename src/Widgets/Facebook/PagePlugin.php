@@ -24,12 +24,31 @@ class PagePlugin extends WP_Widget
         $this->renderer = new PagePluginRenderer();
     }
 
-    public function form($args)
+    public function form($instance)
     {
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('fanpage_url'); ?>">
+                <?php _e('Facebook Page URL', 'jankx') ?>
+            </label>
+            <input
+                type="text"
+                class="widefat"
+                id="<?php echo $this->get_field_id('fanpage_url'); ?>"
+                name="<?php echo $this->get_field_name('fanpage_url'); ?>"
+                value="<?php echo $instance['fanpage_url']; ?>"
+            />
+        </p>
+        <?php
     }
 
     public function widget($args, $instance)
     {
+        PagePluginRenderer::prepare(
+            array(
+            ),
+            $this->renderer
+        );
         echo (string) $this->renderer;
     }
 }

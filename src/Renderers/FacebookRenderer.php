@@ -22,7 +22,8 @@ abstract class FacebookRenderer extends Base
         static::$facebook_app_id = Option::get('facebook_app_id');
     }
 
-    public static function _script() {
+    public static function _script()
+    {
         static::$isRendered = true;
         ?>
         <div id="fb-root"></div>
