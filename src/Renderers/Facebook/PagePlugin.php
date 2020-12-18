@@ -16,12 +16,17 @@ class PagePlugin extends FacebookRenderer
     protected $adapt_container_width;
     protected $lazy;
 
-    public function render() {
+    public function render()
+    {
+        if (is_null(static::$facebook_app_id) || empty($this->href)) {
+            return '';
+        }
+
         ob_start();
         ?>
         <div
             class="fb-page"
-            data-href="https://www.facebook.com/xeisuzusaigon/"
+            data-href="<?php echo $this->href; ?>"
             data-tabs="timeline"
             data-width=""
             data-height=""
@@ -31,10 +36,10 @@ class PagePlugin extends FacebookRenderer
             data-show-facepile="true"
         >
             <blockquote
-                cite="https://www.facebook.com/xeisuzusaigon/"
+                cite="<?php echo $this->href; ?>"
                 class="fb-xfbml-parse-ignore"
             >
-                <a href="https://www.facebook.com/xeisuzusaigon/">Nhà Trọ Cần Thơ</a>
+                <a href="<?php echo $this->href; ?>"><?php bloginfo('name'); ?></a>
             </blockquote>
         </div>
         <?php
