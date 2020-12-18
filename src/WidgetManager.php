@@ -2,6 +2,7 @@
 namespace Jankx\Widget;
 
 use Jankx\Widget\Widgets\Posts;
+use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;
 
 class WidgetManager
 {
@@ -22,5 +23,6 @@ class WidgetManager
     public function registerWidgets()
     {
         register_widget(Posts::class);
+        register_widget(FacebookPagePlugin::class);
     }
 }

@@ -19,22 +19,23 @@ class Posts extends WP_Widget
     public function widget($args, $instance)
     {
         echo array_get($args, 'before_widget');
-            if (!empty($instance['title'])) {
-                echo array_get($args, 'before_title');
-                echo $instance['title'];
-                echo array_get($args, 'after_title');
-            }
+        if (!empty($instance['title'])) {
+            echo array_get($args, 'before_title');
+            echo $instance['title'];
+            echo array_get($args, 'after_title');
+        }
             $postsRenderer = PostsRenderer::prepare(array(
                 'posts_per_page' => array_get($instance, 'posts_per_page', 5),
             ));
-            if (array_get($instance, 'post_layout')) {
-                $postsRenderer->setLayout(array_get($instance, 'post_layout'));
-            }
+        if (array_get($instance, 'post_layout')) {
+            $postsRenderer->setLayout(array_get($instance, 'post_layout'));
+        }
             echo $postsRenderer;
         echo array_get($args, 'after_widget');
     }
 
-    protected function get_post_layout_options($current) {
+    protected function get_post_layout_options($current)
+    {
         $postLayoutManager = PostLayoutManager::getInstance();
         $layouts = $postLayoutManager->getLayouts();
         ?>
@@ -46,7 +47,7 @@ class Posts extends WP_Widget
                 class="widefat"
             >
                 <option value=""><?php _e('Default'); ?></option>
-                <?php foreach($layouts as $layout => $args): ?>
+                <?php foreach ($layouts as $layout => $args) : ?>
                     <option value="<?php echo $layout; ?>" <?php echo selected($layout, $current); ?>><?php echo array_get($args, 'name'); ?></option>
                 <?php endforeach; ?>
             </select>
@@ -54,7 +55,8 @@ class Posts extends WP_Widget
         <?php
     }
 
-    public function form($instance) {
+    public function form($instance)
+    {
         ?>
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title'); ?></label>
