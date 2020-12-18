@@ -1,9 +1,12 @@
 <?php
 namespace Jankx\Widget\Renderers;
 
+use Jankx\Option\Option;
+
 abstract class FacebookRenderer extends Base
 {
     protected static $facebook_app_id;
+    protected static $isRendered = false;
 
     public function __construct()
     {
@@ -16,10 +19,11 @@ abstract class FacebookRenderer extends Base
         if (!is_null(static::$facebook_app_id)) {
             return;
         }
-        static::$facebook_app_id = '2120429251546497';
+        static::$facebook_app_id = Option::get('facebook_app_id');
     }
 
     public static function _script() {
+        static::$isRendered = true;
         ?>
         <div id="fb-root"></div>
         <script
@@ -35,7 +39,7 @@ abstract class FacebookRenderer extends Base
 
     public static function writeFacebookSdkScript()
     {
-        if (is_null(static::$facebook_app_id)) {
+        if (is_null(static::$facebook_app_id) || static::$isRendered) {
             return;
         }
         add_action('wp_footer', array(__CLASS__, '_script'));
