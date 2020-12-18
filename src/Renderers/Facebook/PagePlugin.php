@@ -16,6 +16,11 @@ class PagePlugin extends FacebookRenderer
     protected $adapt_container_width;
     protected $lazy;
 
+    public function setHref($href)
+    {
+        $this->href = $href;
+    }
+
     public function render()
     {
         if (is_null(static::$facebook_app_id) || empty($this->href)) {

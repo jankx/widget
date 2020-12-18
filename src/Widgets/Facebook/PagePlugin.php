@@ -46,6 +46,7 @@ class PagePlugin extends WP_Widget
     {
         PagePluginRenderer::prepare(
             array(
+                'href' => array_get($instance, 'fanpage_url')
             ),
             $this->renderer
         );
