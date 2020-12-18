@@ -17,10 +17,11 @@ abstract class Base implements Renderer
         $this->options[$optionName] = $optionValue;
     }
 
-    public static function prepare($args)
+    public static function prepare($args, $renderer = null)
     {
-        $renderer = new static();
-
+        if (is_null($renderer) || !is_a($renderer, Renderer::class)) {
+            $renderer = new static();
+        }
         if (is_array($args)) {
             foreach ($args as $key => $val) {
                 $method = preg_replace_callback(array('/^([a-z])/', '/[_|-]([a-z])/', '/.+/'), function ($matches) {
