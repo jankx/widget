@@ -12,7 +12,8 @@ class PostsRenderer extends Base
     protected $wp_query;
     protected $layout = PostLayoutManager::LIST_LAYOUT;
 
-    public function __construct($wp_query = null) {
+    public function __construct($wp_query = null)
+    {
         if (!is_null($wp_query)) {
             $this->wp_query = $wp_query;
         }
@@ -68,7 +69,8 @@ class PostsRenderer extends Base
         return $this->wp_query;
     }
 
-    public function setQuery($query) {
+    public function setQuery($query)
+    {
         if (is_a($query, \WP_Query::class)) {
             $this->wp_query = $query;
         }
