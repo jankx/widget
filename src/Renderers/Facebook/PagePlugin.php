@@ -29,24 +29,24 @@ class PagePlugin extends FacebookRenderer
 
         ob_start();
         ?>
-        <div
-            class="fb-page"
-            data-href="<?php echo $this->href; ?>"
-            data-tabs="timeline"
-            data-width=""
-            data-height=""
-            data-small-header="false"
-            data-adapt-container-width="true"
-            data-hide-cover="false"
-            data-show-facepile="true"
-        >
-            <blockquote
-                cite="<?php echo $this->href; ?>"
-                class="fb-xfbml-parse-ignore"
+            <div
+                class="fb-page"
+                data-href="<?php echo $this->href; ?>"
+                data-tabs="timeline"
+                data-width="1000"
+                data-height=""
+                data-small-header="false"
+                data-adapt-container-width="true"
+                data-hide-cover="false"
+                data-show-facepile="true"
             >
-                <a href="<?php echo $this->href; ?>"><?php bloginfo('name'); ?></a>
-            </blockquote>
-        </div>
+                <blockquote
+                    cite="<?php echo $this->href; ?>"
+                    class="fb-xfbml-parse-ignore"
+                >
+                    <a href="<?php echo $this->href; ?>"><?php bloginfo('name'); ?></a>
+                </blockquote>
+            </div>
         <?php
         return ob_get_clean();
     }
