@@ -103,10 +103,12 @@ class PostsRenderer extends Base
         }
 
         $postLayout = new $layoutCls($this->getQuery());
-        $this->setOption(
-            'post_meta_features',
-            $this->createPostMetaFeatures()
-        );
+        if (!isset($this->options['post_meta_features'])) {
+            $this->setOption(
+                'post_meta_features',
+                $this->createPostMetaFeatures()
+            );
+        }
         $postLayout->setOptions($this->options);
 
         if (array_get($this->options, 'show_excerpt', false)) {
