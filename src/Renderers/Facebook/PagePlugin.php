@@ -34,7 +34,7 @@ class PagePlugin extends FacebookRenderer
                 data-href="<?php echo $this->href; ?>"
                 data-tabs="timeline"
                 data-width="1000"
-                data-height=""
+                data-height="556"
                 data-small-header="false"
                 data-adapt-container-width="true"
                 data-hide-cover="false"
