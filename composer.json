@@ -11,6 +11,7 @@
     }
   ],
   "require": {
+    "jankx/condition": "dev-master",
     "jankx/post-layout": "dev-master",
     "jankx/helpers": "dev-master",
     "jankx/option": "dev-master"
