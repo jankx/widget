@@ -13,7 +13,7 @@
   "require": {
     "jankx/condition": "dev-master",
     "jankx/post-layout": "dev-master",
-    "jankx/helpers": "dev-master",
+    "jankx/helpers": "^1.0",
     "jankx/option": "dev-master"
   },
   "autoload": {
