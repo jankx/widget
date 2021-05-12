@@ -11,10 +11,10 @@
     }
   ],
   "require": {
-    "jankx/condition": "dev-master",
-    "jankx/post-layout": "dev-master",
-    "jankx/helpers": "^1.0",
-    "jankx/option": "dev-master"
+    "jankx/condition": "*",
+    "jankx/post-layout": "*",
+    "jankx/helpers": "*",
+    "jankx/option": "*"
   },
   "autoload": {
     "psr-4": {
