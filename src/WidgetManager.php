@@ -3,7 +3,7 @@ namespace Jankx\Widget;
 
 use Jankx\Widget\Widgets\Posts;
 use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;
-use Jankx\Widget\Widgets\CustomMenu;
+use Jankx\Widget\Widgets\CollapaseNavMenu;
 
 class WidgetManager
 {
@@ -25,6 +25,6 @@ class WidgetManager
     {
         register_widget(Posts::class);
         register_widget(FacebookPagePlugin::class);
-        register_widget(CustomMenu::class);
+        register_widget(CollapaseNavMenu::class);
     }
 }
