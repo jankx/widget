@@ -13,7 +13,11 @@ class Posts extends WP_Widget
             'classname' => 'jankx-posts',
             'description' => __('Show posts on your site with many filters and features.', 'jankx')
         );
-        parent::__construct('jankx_posts', __('Jankx Posts', 'jankx'), $options);
+        parent::__construct(
+            'jankx_posts',
+            sprintf(__('%s Posts', 'jankx'), \Jankx::templateName()),
+            $options
+        );
     }
 
     public function widget($args, $instance)

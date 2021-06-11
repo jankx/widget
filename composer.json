@@ -12,9 +12,7 @@
   ],
   "require": {
     "jankx/condition": "*",
-    "jankx/post-layout": "*",
-    "jankx/helpers": "*",
-    "jankx/option": "*"
+    "jankx/core": "*"
   },
   "autoload": {
     "psr-4": {

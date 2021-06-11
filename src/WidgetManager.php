@@ -1,10 +1,12 @@
 <?php
 namespace Jankx\Widget;
 
+use Jankx\Option\Option;
 use Jankx\Widget\Widgets\Posts;
 use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;
 use Jankx\Widget\Widgets\CollapaseNavMenu;
-use Jankx\Option\Option;
+use Jankx\Widget\Widgets\CustomFields;
+use Jankx\Widget\Widgets\Socials;
 
 class WidgetManager
 {
@@ -26,6 +28,8 @@ class WidgetManager
     {
         register_widget(Posts::class);
         register_widget(CollapaseNavMenu::class);
+        register_widget(CustomFields::class);
+        register_widget(Socials::class);
 
         if (apply_filters('jankx_widget_enable_facebook_widgets', Option::get('facebook_app_id'))) {
             register_widget(FacebookPagePlugin::class);
