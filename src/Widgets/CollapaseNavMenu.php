@@ -2,6 +2,7 @@
 namespace Jankx\Widget\Widgets;
 
 use WP_Widget;
+use Jankx;
 use Jankx\GlobalVariables;
 
 class CollapaseNavMenu extends WP_Widget
@@ -9,7 +10,7 @@ class CollapaseNavMenu extends WP_Widget
     public function __construct()
     {
         $options = array(
-            'name' => __('Collapase Menu', 'jankx'),
+            'name' => sprintf(__('%s Collapase Menu', 'jankx'), Jankx::templateName()),
         );
 
         return parent::__construct(
