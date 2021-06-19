@@ -25,11 +25,12 @@ class Socials extends WP_Widget
         );
     }
 
-    public function form($instance) {
-
+    public function form($instance)
+    {
     }
 
-    public function widget($args, $instance) {
+    public function widget($args, $instance)
+    {
         echo $args['before_widget'];
         if (isset($instance['title'])) {
             echo $args['before_title'];
