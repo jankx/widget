@@ -3,6 +3,7 @@ namespace Jankx\Widget\Renderers;
 
 use WP_Query;
 use Jankx\PostLayout\PostLayoutManager;
+use Jankx\PostLayout\Layout\ListLayout;
 
 class PostsRenderer extends Base
 {
@@ -10,7 +11,7 @@ class PostsRenderer extends Base
     protected $tags = array();
     protected $options = array();
     protected $wp_query;
-    protected $layout = PostLayoutManager::LIST_LAYOUT;
+    protected $layout = ListLayout::LAYOUT_NAME;
 
     public function __construct($wp_query = null)
     {
