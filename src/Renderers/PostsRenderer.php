@@ -2,6 +2,7 @@
 namespace Jankx\Widget\Renderers;
 
 use WP_Query;
+use Jankx\TemplateLoader;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 
@@ -96,14 +97,16 @@ class PostsRenderer extends Base
 
     public function render()
     {
-        $layoutManager = PostLayoutManager::getInstance();
-        $layoutCls     = $layoutManager->getLayoutClass($this->layout);
-        if (empty($layoutCls)) {
+        $layoutManager = PostLayoutManager::getInstance(
+            TemplateLoader::getTemplateEngine()->getId()
+        );
+
+        $postLayout     = $layoutManager->createLayout($this->layout, $this->getQuery());
+        if (empty($postLayout)) {
             _e('Please choose your post layout', 'jankx');
             return;
         }
 
-        $postLayout = new $layoutCls($this->getQuery());
         if (!isset($this->options['post_meta_features'])) {
             $this->setOption(
                 'post_meta_features',
