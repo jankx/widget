@@ -4,6 +4,7 @@ namespace Jankx\Widget\Widgets;
 use WP_Widget;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\PostLayout\PostLayoutManager;
+use Jankx\TemplateLoader;
 
 class Posts extends WP_Widget
 {
@@ -40,7 +41,7 @@ class Posts extends WP_Widget
 
     protected function get_post_layout_options($current)
     {
-        $postLayoutManager = PostLayoutManager::getInstance();
+        $postLayoutManager = PostLayoutManager::getInstance(TemplateLoader::getTemplateEngine());
         $layouts = $postLayoutManager->getLayouts();
         ?>
         <p>
