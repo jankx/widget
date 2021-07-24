@@ -14,6 +14,9 @@ class PageSelectorRenderer extends Base
         if (empty($selected_pages)) {
             return;
         }
+        $selected_pages = array_map(function($item){
+            return preg_replace('/[^\d\,\.]/', '', $item);
+        }, $selected_pages);
 
         $args = array(
             'post_type' => 'page',
