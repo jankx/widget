@@ -40,6 +40,7 @@ class PageSelectorRenderer extends Base
             array_get($this->options, 'layout'),
             $wp_query
         );
+        $layout->setOptions($this->options);
 
         return $layout->render();
     }
