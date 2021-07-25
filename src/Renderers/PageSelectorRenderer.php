@@ -43,4 +43,10 @@ class PageSelectorRenderer extends Base
 
         return $layout->render();
     }
+
+    public static function getStyleSupports() {
+        return apply_filters('jankx/widget/renderer/page_selector/styles', array(
+            'simple' => __('Simple', 'jankx')
+        ));
+    }
 }
