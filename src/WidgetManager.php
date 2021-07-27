@@ -7,6 +7,7 @@ use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;
 use Jankx\Widget\Widgets\CollapaseNavMenu;
 use Jankx\Widget\Widgets\CustomFields;
 use Jankx\Widget\Widgets\Socials;
+use Jankx\Widget\Widgets\ToogleNavMenu;
 
 class WidgetManager
 {
@@ -30,6 +31,7 @@ class WidgetManager
         register_widget(CollapaseNavMenu::class);
         register_widget(CustomFields::class);
         register_widget(Socials::class);
+        register_widget(ToogleNavMenu::class);
 
         if (apply_filters('jankx_widget_enable_facebook_widgets', Option::get('facebook_app_id'))) {
             register_widget(FacebookPagePlugin::class);

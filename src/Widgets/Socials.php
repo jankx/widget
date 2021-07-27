@@ -27,6 +27,18 @@ class Socials extends WP_Widget
 
     public function form($instance)
     {
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo esc_html(__('Title')); ?></label>
+            <input
+                type="text"
+                id="<?php echo $this->get_field_id('title'); ?>"
+                class="widefat"
+                name="<?php echo $this->get_field_name('title'); ?>"
+                value="<?php echo array_get($instance, 'title'); ?>"
+            >
+        </p>
+        <?php
     }
 
     public function widget($args, $instance)

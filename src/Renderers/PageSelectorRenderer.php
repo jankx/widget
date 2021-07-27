@@ -14,7 +14,7 @@ class PageSelectorRenderer extends Base
         if (empty($selected_pages)) {
             return;
         }
-        $selected_pages = array_map(function($item){
+        $selected_pages = array_map(function ($item) {
             return preg_replace('/[^\d\,\.]/', '', $item);
         }, $selected_pages);
 
@@ -45,7 +45,8 @@ class PageSelectorRenderer extends Base
         return $layout->render();
     }
 
-    public static function getStyleSupports() {
+    public static function getStyleSupports()
+    {
         return apply_filters('jankx/widget/renderer/page_selector/styles', array(
             'simple' => __('Simple', 'jankx')
         ));
