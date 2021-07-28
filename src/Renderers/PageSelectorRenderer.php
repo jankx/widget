@@ -42,7 +42,16 @@ class PageSelectorRenderer extends Base
         );
         $layout->setOptions($this->options);
 
-        return $layout->render();
+        $wrapCls = array('page-selector-wrapper', 'style-' . array_get($this->options, 'style', 'simple'));
+
+        $wrapAttrs = array('class' => $wrapCls);
+
+        return sprintf(
+            "%s\n%s\n%s",
+            '<div ' . jankx_generate_html_attributes($wrapAttrs) . '>',
+            $layout->render(false),
+            '</div>'
+        );
     }
 
     public static function getStyleSupports()
