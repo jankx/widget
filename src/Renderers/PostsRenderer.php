@@ -98,7 +98,7 @@ class PostsRenderer extends Base
     public function render()
     {
         $layoutManager = PostLayoutManager::getInstance(
-            TemplateLoader::getTemplateEngine()->getId()
+            TemplateLoader::getTemplateEngine()
         );
 
         $postLayout     = $layoutManager->createLayout($this->layout, $this->getQuery());
