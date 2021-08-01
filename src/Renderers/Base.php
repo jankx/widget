@@ -6,6 +6,7 @@ use Jankx\Widget\Constracts\Renderer;
 abstract class Base implements Renderer
 {
     protected $options = array();
+    protected $layoutOptions = array();
 
     public function __toString()
     {
@@ -17,13 +18,10 @@ abstract class Base implements Renderer
         $this->options[$optionName] = $optionValue;
     }
 
-    public static function prepare($args, $renderer = null)
+    public function setOptions($options)
     {
-        if (is_null($renderer) || !is_a($renderer, Renderer::class)) {
-            $renderer = new static();
-        }
-        if (is_array($args)) {
-            foreach ($args as $key => $val) {
+        if (is_array($options)) {
+            foreach ($options as $key => $val) {
                 $method = preg_replace_callback(array('/^([a-z])/', '/[_|-]([a-z])/', '/.+/'), function ($matches) {
                     if (isset($matches[1])) {
                         return strtoupper($matches[1]);
@@ -31,14 +29,34 @@ abstract class Base implements Renderer
                     return sprintf('set%s', $matches[0]);
                 }, $key);
 
-                if (method_exists($renderer, $method)) {
-                    $renderer->$method($val);
+                if (method_exists($this, $method)) {
+                    $this->$method($val);
                 } else {
-                    $renderer->setOption($key, $val);
+                    $this->setOption($key, $val);
                 }
             }
         }
+        return $this;
+    }
 
-        return $renderer;
+    public function setLayoutOptions($options)
+    {
+        if (!is_array($options)) {
+            return;
+        }
+        $this->layoutOptions = $options;
+    }
+
+    public function getLayoutOptions()
+    {
+        return $this->layoutOptions;
+    }
+
+    public static function prepare($args, $renderer = null)
+    {
+        if (is_null($renderer) || !is_a($renderer, Renderer::class)) {
+            $renderer = new static();
+        }
+        return $renderer->setOptions($args);
     }
 }

@@ -6,7 +6,7 @@ use Jankx\TemplateLoader;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 
-class PostsRenderer extends Base
+class PostsRenderer extends PostTypePostsRenderer
 {
     protected $categories = array();
     protected $tags = array();
