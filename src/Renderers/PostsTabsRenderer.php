@@ -19,9 +19,8 @@ class PostsTabsRenderer extends Base
     protected function generateWordPressQuery()
     {
         $args = array(
-            'post_type' => 'post',
+            'post_type' => array_get($this->options, 'post_type', 'post'),
         );
-
         return new WP_Query($args);
     }
 
