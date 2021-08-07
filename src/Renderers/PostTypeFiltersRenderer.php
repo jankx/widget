@@ -24,7 +24,7 @@ class PostTypeFiltersRenderer extends Base
     {
         $args = array(
             'post_type' => 'project',
-            'posts_per_page' => array_get($options, 'posts_per_page', 8),
+            'posts_per_page' => array_get($this->options, 'posts_per_page', 8),
         );
 
         return new WP_Query($args);

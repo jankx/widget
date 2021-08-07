@@ -61,6 +61,14 @@ class PostsRenderer extends PostTypePostsRenderer
                 $args['tag__in'] = $this->tags;
             }
 
+            if (($post_format = array_get($this->options, 'post_format', 'standard')) !== 'standard') {
+                $args['tax_query'][] = array(
+                    'taxonomy' => 'post_format',
+                    'field' => 'slug',
+                    'terms' => sprintf('post-format-%s', $post_format)
+                );
+            }
+
             $args['posts_per_page'] = array_get($this->options, 'posts_per_page', 10);
             $this->wp_query = apply_filters(
                 'jankx_widget_post_renderer_make_query',

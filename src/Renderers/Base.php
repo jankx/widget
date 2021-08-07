@@ -44,7 +44,10 @@ abstract class Base implements Renderer
         if (!is_array($options)) {
             return;
         }
-        $this->layoutOptions = $options;
+        $this->layoutOptions = wp_parse_args(
+            $options,
+            $this->layoutOptions
+        );
     }
 
     public function getLayoutOptions()
