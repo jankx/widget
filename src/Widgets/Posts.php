@@ -32,6 +32,9 @@ class Posts extends WP_Widget
             $postsRenderer = PostsRenderer::prepare(array(
                 'posts_per_page' => array_get($instance, 'posts_per_page', 5),
                 'thumbnail_position' => array_get($instance, 'thumbnail_position', 5),
+                'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
+                'columns'  => array_get($instance, 'columns', 4),
+                'rows'  => array_get($instance, 'rows', 1),
             ));
         if (array_get($instance, 'post_layout')) {
             $postsRenderer->setLayout(array_get($instance, 'post_layout'));
@@ -96,6 +99,18 @@ class Posts extends WP_Widget
             </select>
         </p>
         <p>
+            <label for="<?php echo $this->get_field_id('show_post_date') ?>">
+                <input
+                    type="checkbox"
+                    id="<?php echo $this->get_field_id('show_post_date') ?>"
+                    name="<?php echo $this->get_field_name('show_post_date'); ?>"
+                    <?php checked('yes', array_get($instance, 'show_post_date', 'no')); ?>
+                    value="yes"
+                />
+                <?php _e('Show post date', 'jankx'); ?>
+            </label>
+        </p>
+        <p>
             <label for="<?php echo $this->get_field_id('posts_per_page') ?>"><?php _e('Number of items', 'jankx'); ?></label>
             <input
                 type="number"
@@ -105,12 +120,23 @@ class Posts extends WP_Widget
             />
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('posts_per_page') ?>"><?php _e('Number of items', 'jankx'); ?></label>
+            <label for="<?php echo $this->get_field_id('columns') ?>"><?php _e('Columns', 'jankx'); ?></label>
             <input
                 type="number"
-                id="<?php echo $this->get_field_id('posts_per_page') ?>"
-                name="<?php echo $this->get_field_name('posts_per_page'); ?>"
-                value="<?php echo array_get($instance, 'posts_per_page', 5) ?>"
+                class="widefat"
+                id="<?php echo $this->get_field_id('columns') ?>"
+                name="<?php echo $this->get_field_name('columns'); ?>"
+                value="<?php echo array_get($instance, 'columns', 5) ?>"
+            />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('rows') ?>"><?php _e('Rows', 'jankx'); ?></label>
+            <input
+                type="number"
+                class="widefat"
+                id="<?php echo $this->get_field_id('rows') ?>"
+                name="<?php echo $this->get_field_name('rows'); ?>"
+                value="<?php echo array_get($instance, 'rows', 5) ?>"
             />
         </p>
         <?php
