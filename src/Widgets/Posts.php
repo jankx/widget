@@ -29,7 +29,7 @@ class Posts extends WP_Widget
             'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
             'columns'  => array_get($instance, 'columns', 4),
             'rows'  => array_get($instance, 'rows', 1),
-            'show_dot'  => array_get($instance, 'show_splide_pagination', 'no') === 'yes',
+            'show_dot'  => array_get($instance, 'show_carousel_pagination', 'no') === 'yes',
             'data_preset' => array_get($instance, 'data_preset'),
         ));
         if (array_get($instance, 'post_layout')) {
@@ -176,12 +176,12 @@ class Posts extends WP_Widget
             />
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('show_splide_pagination') ?>">
+            <label for="<?php echo $this->get_field_id('show_carousel_pagination') ?>">
                 <input
                     type="checkbox"
-                    id="<?php echo $this->get_field_id('show_splide_pagination') ?>"
-                    name="<?php echo $this->get_field_name('show_splide_pagination'); ?>"
-                    <?php checked('yes', array_get($instance, 'show_splide_pagination', 'no')); ?>
+                    id="<?php echo $this->get_field_id('show_carousel_pagination') ?>"
+                    name="<?php echo $this->get_field_name('show_carousel_pagination'); ?>"
+                    <?php checked('yes', array_get($instance, 'show_carousel_pagination', 'no')); ?>
                     value="yes"
                 />
                 <?php _e('Show slide pagination', 'jankx'); ?>

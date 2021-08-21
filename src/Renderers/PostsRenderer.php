@@ -144,7 +144,7 @@ class PostsRenderer extends PostTypePostsRenderer
     {
         $metas = array();
         if (array_get($this->options, 'show_postdate')) {
-            $metas['post_date'] = true;
+            $metas['post_date'] = false;
         }
         return $metas;
     }
@@ -173,13 +173,9 @@ class PostsRenderer extends PostTypePostsRenderer
         }
         $postLayout->setOptions($this->options);
 
-        if (array_get($this->options, 'show_excerpt', false)) {
-            add_filter('excerpt_length', array($this, 'excerptLenght'));
-        }
+        add_filter('excerpt_length', array($this, 'excerptLenght'));
         $renderedLayout = $postLayout->render(false);
-        if (array_get($this->options, 'show_excerpt', false)) {
-            remove_filter('excerpt_length', array($this, 'excerptLenght'));
-        }
+        remove_filter('excerpt_length', array($this, 'excerptLenght'));
 
         return $renderedLayout;
     }
