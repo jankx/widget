@@ -65,6 +65,11 @@ class PostsRenderer extends PostTypePostsRenderer
                 case 'related':
                     $queried_object = get_queried_object();
                     if (is_a($queried_object, WP_Post::class)) {
+                        $currentPostType = array_get($this->options, 'post_type', 'post');
+                        if ($currentPostType !== $queried_object->post_type) {
+                            return false;
+                        }
+
                         $args['post_type'] = $queried_object->post_type;
                         $args['post__not_in'] = array($queried_object->ID);
 
@@ -80,6 +85,8 @@ class PostsRenderer extends PostTypePostsRenderer
                     break;
             }
         }
+
+        return true;
     }
 
     public function getQuery()
@@ -89,7 +96,9 @@ class PostsRenderer extends PostTypePostsRenderer
                 'post_type' => array_get($this->options, 'post_type', 'post'),
             );
             $this->validateTaxonomies();
-            $this->createDataPresetArgs($args);
+            if (!$this->createDataPresetArgs($args)) {
+                return;
+            }
 
             if (!empty($this->categories)) {
                 $args['category__in'] = $this->categories;
@@ -142,11 +151,15 @@ class PostsRenderer extends PostTypePostsRenderer
 
     public function render()
     {
+        $wp_query = $this->getQuery();
+        if (is_null($wp_query) || !$wp_query->have_posts()) {
+            return;
+        }
+
         $layoutManager = PostLayoutManager::getInstance(
             TemplateLoader::getTemplateEngine()
         );
-
-        $postLayout     = $layoutManager->createLayout($this->layout, $this->getQuery());
+        $postLayout     = $layoutManager->createLayout($this->layout, $wp_query);
         if (empty($postLayout)) {
             _e('Please choose your post layout', 'jankx');
             return;
@@ -163,7 +176,7 @@ class PostsRenderer extends PostTypePostsRenderer
         if (array_get($this->options, 'show_excerpt', false)) {
             add_filter('excerpt_length', array($this, 'excerptLenght'));
         }
-        $renderedLayout = $postLayout->render();
+        $renderedLayout = $postLayout->render(false);
         if (array_get($this->options, 'show_excerpt', false)) {
             remove_filter('excerpt_length', array($this, 'excerptLenght'));
         }

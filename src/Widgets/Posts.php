@@ -23,25 +23,31 @@ class Posts extends WP_Widget
 
     public function widget($args, $instance)
     {
+        $postsRenderer = PostsRenderer::prepare(array(
+            'posts_per_page' => array_get($instance, 'posts_per_page', 5),
+            'thumbnail_position' => array_get($instance, 'thumbnail_position', 5),
+            'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
+            'columns'  => array_get($instance, 'columns', 4),
+            'rows'  => array_get($instance, 'rows', 1),
+            'show_dot'  => array_get($instance, 'show_splide_pagination', 'no') === 'yes',
+            'data_preset' => array_get($instance, 'data_preset'),
+        ));
+        if (array_get($instance, 'post_layout')) {
+            $postsRenderer->setLayout(array_get($instance, 'post_layout'));
+        }
+        $content = $postsRenderer->render();
+        // The posts do not have content
+        if (!$content) {
+            return;
+        }
+
         echo array_get($args, 'before_widget');
         if (!empty($instance['title'])) {
             echo array_get($args, 'before_title');
             echo $instance['title'];
             echo array_get($args, 'after_title');
         }
-            $postsRenderer = PostsRenderer::prepare(array(
-                'posts_per_page' => array_get($instance, 'posts_per_page', 5),
-                'thumbnail_position' => array_get($instance, 'thumbnail_position', 5),
-                'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
-                'columns'  => array_get($instance, 'columns', 4),
-                'rows'  => array_get($instance, 'rows', 1),
-                'show_dot'  => array_get($instance, 'show_splide_pagination', 'no') === 'yes',
-                'data_preset' => array_get($instance, 'data_preset'),
-            ));
-        if (array_get($instance, 'post_layout')) {
-            $postsRenderer->setLayout(array_get($instance, 'post_layout'));
-        }
-            echo $postsRenderer;
+            echo $content;
         echo array_get($args, 'after_widget');
     }
 
