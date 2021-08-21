@@ -2,15 +2,19 @@
 namespace Jankx\Widget\Renderers;
 
 use WP_Query;
+use WP_Post;
 use Jankx\TemplateLoader;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 
 class PostsRenderer extends PostTypePostsRenderer
 {
+    protected $taxonomies = array();
     protected $categories = array();
     protected $tags = array();
-    protected $options = array();
+    protected $options = array(
+        'data_preset' => '',
+    );
     protected $wp_query;
     protected $layout = ListLayout::LAYOUT_NAME;
 
@@ -35,6 +39,14 @@ class PostsRenderer extends PostTypePostsRenderer
         $this->layout = $value;
     }
 
+    public function setTaxonomies($taxonomies)
+    {
+        if (!in_array($taxonomies)) {
+            return;
+        }
+        $this->taxonomies = $taxonomies;
+    }
+
     public function validateTaxonomies()
     {
         // `none` value's Elementor
@@ -46,6 +58,30 @@ class PostsRenderer extends PostTypePostsRenderer
         }
     }
 
+    public function createDataPresetArgs(&$args)
+    {
+        if (($data_preset = array_get($this->options, 'data_preset'))) {
+            switch ($data_preset) {
+                case 'related':
+                    $queried_object = get_queried_object();
+                    if (is_a($queried_object, WP_Post::class)) {
+                        $args['post_type'] = $queried_object->post_type;
+                        $args['post__not_in'] = array($queried_object->ID);
+
+                        if ($queried_object->post_type === 'post') {
+                            $this->categories = wp_get_post_terms($queried_object->ID, 'category', array('fields' => 'ids'));
+                            $this->tags = wp_get_post_terms($queried_object->ID, 'post_tag', array('fields' => 'ids'));
+                        }
+                    }
+                    break;
+                case 'recents':
+                    $args['orderby'] = 'date';
+                    $argc['order'] = 'DESC';
+                    break;
+            }
+        }
+    }
+
     public function getQuery()
     {
         if (is_null($this->wp_query)) {
@@ -53,6 +89,7 @@ class PostsRenderer extends PostTypePostsRenderer
                 'post_type' => array_get($this->options, 'post_type', 'post'),
             );
             $this->validateTaxonomies();
+            $this->createDataPresetArgs($args);
 
             if (!empty($this->categories)) {
                 $args['category__in'] = $this->categories;

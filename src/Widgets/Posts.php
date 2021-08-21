@@ -36,6 +36,7 @@ class Posts extends WP_Widget
                 'columns'  => array_get($instance, 'columns', 4),
                 'rows'  => array_get($instance, 'rows', 1),
                 'show_dot'  => array_get($instance, 'show_splide_pagination', 'no') === 'yes',
+                'data_preset' => array_get($instance, 'data_preset'),
             ));
         if (array_get($instance, 'post_layout')) {
             $postsRenderer->setLayout(array_get($instance, 'post_layout'));
@@ -66,6 +67,22 @@ class Posts extends WP_Widget
         <?php
     }
 
+    protected function getDataPresets($instance)
+    {
+        $presets = apply_filters('jankx/widget/post/data/preset', array(
+            'recents' => __('Recents'),
+            'related' => __('Related', 'jankx'),
+        ));
+        if (array_get($instance, 'post_type')) {
+            return apply_filters(
+                sprintf('jankx/widget/%s/data/preset', array_get($instance, 'post_type')),
+                $presets,
+                $instance
+            );
+        }
+        return $presets;
+    }
+
     public function form($instance)
     {
         $thumbnail_positions = array(
@@ -84,8 +101,20 @@ class Posts extends WP_Widget
                 value="<?php echo array_get($instance, 'title'); ?>"
             />
         </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('data_preset'); ?>"><?php _e('Data Preset', 'jankx'); ?></label>
+            <select
+                name="<?php echo $this->get_field_name('data_preset'); ?>"
+                id="<?php echo $this->get_field_id('data_preset'); ?>"
+                class="widefat"
+            >
+                <option value=""><?php _e('Default'); ?></option>
+                <?php foreach ($this->getDataPresets($instance) as $data_preset => $position) : ?>
+                    <option value="<?php echo $data_preset; ?>" <?php echo selected($data_preset, array_get($instance, 'data_preset', '')); ?>><?php echo $position; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </p>
         <?php $this->get_post_layout_options(array_get($instance, 'post_layout')); ?>
-
         <p>
             <label for="<?php echo $this->get_field_id('thumbnail_position'); ?>"><?php _e('Thumbnail Position', 'jankx'); ?></label>
             <select
