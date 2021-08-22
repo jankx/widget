@@ -20,6 +20,7 @@ class PostsTabsRenderer extends Base
     {
         $args = array(
             'post_type' => array_get($this->options, 'post_type', 'post'),
+            'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
         );
         return new WP_Query($args);
     }

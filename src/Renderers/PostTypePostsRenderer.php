@@ -64,9 +64,10 @@ class PostTypePostsRenderer extends Base
             return;
         }
 
+        $wp_query = $this->generateWordPressQuery();
         $layout = $postLayoutManager->createLayout(
             array_get($this->options, 'layout', Card::LAYOUT_NAME),
-            $this->generateWordPressQuery()
+            $wp_query
         );
         $layout->setOptions($this->layoutOptions);
 
