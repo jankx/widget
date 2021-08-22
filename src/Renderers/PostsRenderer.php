@@ -66,7 +66,7 @@ class PostsRenderer extends PostTypePostsRenderer
                     $queried_object = get_queried_object();
                     if (is_a($queried_object, WP_Post::class)) {
                         $currentPostType = array_get($this->options, 'post_type', 'post');
-                        if ($currentPostType !== $queried_object->post_type) {
+                        if ($currentPostType && $currentPostType !== $queried_object->post_type) {
                             return false;
                         }
 

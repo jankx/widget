@@ -30,6 +30,7 @@ class Posts extends WP_Widget
             'columns'  => array_get($instance, 'columns', 4),
             'rows'  => array_get($instance, 'rows', 1),
             'show_dot'  => array_get($instance, 'show_carousel_pagination', 'no') === 'yes',
+            'post_type' => array_get($instance, 'post_type'),
             'data_preset' => array_get($instance, 'data_preset'),
         ));
         if (array_get($instance, 'post_layout')) {
@@ -49,6 +50,19 @@ class Posts extends WP_Widget
         }
             echo $content;
         echo array_get($args, 'after_widget');
+    }
+
+    public function getPostTypes()
+    {
+        $postTypes = array();
+
+        $postTypeObjects = get_post_types(array(
+            'public' => true,
+        ), 'objects');
+        foreach ($postTypeObjects as $postType => $object) {
+            $postTypes[$postType] = $object->label;
+        }
+        return $postTypes;
     }
 
     protected function get_post_layout_options($current)
@@ -106,6 +120,19 @@ class Posts extends WP_Widget
                 name="<?php echo $this->get_field_name('title'); ?>"
                 value="<?php echo array_get($instance, 'title'); ?>"
             />
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php _e('Post Type', 'jankx'); ?></label>
+            <select
+                name="<?php echo $this->get_field_name('post_type'); ?>"
+                id="<?php echo $this->get_field_id('post_type'); ?>"
+                class="widefat"
+            >
+                <option value=""><?php _e('Default'); ?></option>
+                <?php foreach ($this->getPostTypes($instance) as $post_type => $post_type_label) : ?>
+                    <option value="<?php echo $post_type; ?>" <?php echo selected($post_type, array_get($instance, 'post_type]', '')); ?>><?php echo $post_type_label; ?></option>
+                <?php endforeach; ?>
+            </select>
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('data_preset'); ?>"><?php _e('Data Preset', 'jankx'); ?></label>
