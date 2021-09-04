@@ -89,7 +89,7 @@ class PostsRenderer extends PostTypePostsRenderer
         return true;
     }
 
-    public function getQuery()
+    public function generateWordPressQuery()
     {
         if (is_null($this->wp_query)) {
             $args = array(
@@ -116,6 +116,14 @@ class PostsRenderer extends PostTypePostsRenderer
             }
 
             $args['posts_per_page'] = array_get($this->options, 'posts_per_page', 10);
+
+            // Sort posts
+            $orderBy = array_get($this->options, 'orderby', 'none');
+            if ($orderBy && $orderBy !== 'none') {
+                $args['orderby'] = $orderBy;
+                $args['order'] = array_get($this->options, 'order', 'ASC');
+            }
+
             $this->wp_query = apply_filters(
                 'jankx_widget_post_renderer_make_query',
                 new WP_Query($args),
@@ -151,7 +159,7 @@ class PostsRenderer extends PostTypePostsRenderer
 
     public function render()
     {
-        $wp_query = $this->getQuery();
+        $wp_query = $this->generateWordPressQuery();
         if (is_null($wp_query) || !$wp_query->have_posts()) {
             return;
         }
