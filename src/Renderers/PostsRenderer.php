@@ -89,6 +89,23 @@ class PostsRenderer extends PostTypePostsRenderer
         return true;
     }
 
+    protected function getSpecificData()
+    {
+        $specific_data = array_get($this->options, 'specific_data', '');
+        if (is_array($specific_data)) {
+            return $specific_data;
+        }
+
+        $specific_data = explode(',', $specific_data);
+        $specific_data = array_map(function ($item) {
+            $item = trim($item);
+
+            return $item ? $item : null;
+        }, $specific_data);
+
+        return array_filter($specific_data);
+    }
+
     public function generateWordPressQuery()
     {
         if (is_null($this->wp_query)) {
@@ -120,8 +137,13 @@ class PostsRenderer extends PostTypePostsRenderer
             // Sort posts
             $orderBy = array_get($this->options, 'orderby', 'none');
             if ($orderBy && $orderBy !== 'none') {
-                $args['orderby'] = $orderBy;
-                $args['order'] = array_get($this->options, 'order', 'ASC');
+                if ($orderBy === 'specific') {
+                    $args['post__in'] = $this->getSpecificData();
+                    $args['orderby']  = 'post__in';
+                } else {
+                    $args['orderby'] = $orderBy;
+                    $args['order'] = array_get($this->options, 'order', 'ASC');
+                }
             }
 
             $this->wp_query = apply_filters(
