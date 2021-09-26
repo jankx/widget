@@ -130,7 +130,7 @@ class Posts extends WP_Widget
             >
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($this->getPostTypes($instance) as $post_type => $post_type_label) : ?>
-                    <option value="<?php echo $post_type; ?>" <?php echo selected($post_type, array_get($instance, 'post_type]', '')); ?>><?php echo $post_type_label; ?></option>
+                    <option value="<?php echo $post_type; ?>" <?php echo selected($post_type, array_get($instance, 'post_type', '')); ?>><?php echo $post_type_label; ?></option>
                 <?php endforeach; ?>
             </select>
         </p>
