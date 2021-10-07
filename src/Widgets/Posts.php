@@ -4,7 +4,6 @@ namespace Jankx\Widget\Widgets;
 use WP_Widget;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\PostLayout\PostLayoutManager;
-use Jankx\TemplateLoader;
 
 class Posts extends WP_Widget
 {

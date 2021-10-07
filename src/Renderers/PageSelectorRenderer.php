@@ -2,7 +2,7 @@
 namespace Jankx\Widget\Renderers;
 
 use WP_Query;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 
@@ -35,7 +35,7 @@ class PageSelectorRenderer extends Base
             return '';
         }
 
-        $postLayoutManager = PostLayoutManager::getInstance(TemplateLoader::getTemplateEngine());
+        $postLayoutManager = PostLayoutManager::getInstance(TemplateAndLayout::getTemplateEngine());
         $layout = $postLayoutManager->createLayout(
             array_get($this->options, 'layout'),
             $wp_query

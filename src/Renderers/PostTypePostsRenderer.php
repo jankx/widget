@@ -3,7 +3,7 @@ namespace Jankx\Widget\Renderers;
 
 use WP_Query;
 use Jankx\PostLayout\PostLayoutManager;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 use Jankx\PostLayout\Layout\Card;
 
 class PostTypePostsRenderer extends Base
@@ -59,7 +59,7 @@ class PostTypePostsRenderer extends Base
 
     public function render()
     {
-        $postLayoutManager = PostLayoutManager::getInstance(TemplateLoader::getTemplateEngine());
+        $postLayoutManager = PostLayoutManager::getInstance(TemplateAndLayout::getTemplateEngine());
         if (!$postLayoutManager) {
             return;
         }

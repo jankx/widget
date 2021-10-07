@@ -3,7 +3,7 @@ namespace Jankx\Widget\Renderers;
 
 use WP_Query;
 use WP_Post;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\PostLayout\Layout\ListLayout;
 
@@ -187,7 +187,7 @@ class PostsRenderer extends PostTypePostsRenderer
         }
 
         $layoutManager = PostLayoutManager::getInstance(
-            TemplateLoader::getTemplateEngine()
+            TemplateAndLayout::getTemplateEngine()
         );
         $postLayout     = $layoutManager->createLayout($this->layout, $wp_query);
         if (empty($postLayout)) {

@@ -3,7 +3,7 @@ namespace Jankx\Widget\Renderers;
 
 use WP_Query;
 use Jankx\PostLayout\PostLayoutManager;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 use Jankx\PostLayout\Layout\Card;
 
 class PostsTabsRenderer extends Base
@@ -28,7 +28,7 @@ class PostsTabsRenderer extends Base
 
     public function render()
     {
-        $postLayoutManager = PostLayoutManager::getInstance(TemplateLoader::getTemplateEngine());
+        $postLayoutManager = PostLayoutManager::getInstance(TemplateAndLayout::getTemplateEngine());
 
         $layout = $postLayoutManager->createLayout(
             'tabs',

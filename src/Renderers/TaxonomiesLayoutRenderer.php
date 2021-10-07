@@ -3,7 +3,7 @@ namespace Jankx\Widget\Renderers;
 
 use WP_Term_Query;
 use Jankx\PostLayout\PostLayoutManager;
-use Jankx\TemplateLoader;
+use Jankx\TemplateAndLayout;
 
 class TaxonomiesLayoutRenderer extends Base
 {
@@ -37,7 +37,7 @@ class TaxonomiesLayoutRenderer extends Base
 
     public function render()
     {
-        $postLayoutManager = PostLayoutManager::getInstance(TemplateLoader::getTemplateEngine());
+        $postLayoutManager = PostLayoutManager::getInstance(TemplateAndLayout::getTemplateEngine());
         $layout = $postLayoutManager->createTermLayout(
             array_get($this->options, 'layout', 'card'),
             $this->buildWordPressQuery()
