@@ -162,14 +162,6 @@ class PostsRenderer extends PostTypePostsRenderer
         }
     }
 
-    public function excerptLenght($length)
-    {
-        if (isset($this->options['excerpt_length'])) {
-            return $this->options['excerpt_length'];
-        }
-        return $length;
-    }
-
     protected function createPostMetaFeatures()
     {
         $metas = array();
@@ -201,12 +193,10 @@ class PostsRenderer extends PostTypePostsRenderer
                 $this->createPostMetaFeatures()
             );
         }
+
         $postLayout->setOptions($this->options);
 
-        add_filter('excerpt_length', array($this, 'excerptLenght'));
-        $renderedLayout = $postLayout->render(false);
-        remove_filter('excerpt_length', array($this, 'excerptLenght'));
-
-        return $renderedLayout;
+        // Render content
+        return $postLayout->render(false);
     }
 }
