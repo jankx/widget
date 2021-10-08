@@ -41,7 +41,7 @@ class PostsRenderer extends PostTypePostsRenderer
 
     public function setTaxonomies($taxonomies)
     {
-        if (!in_array($taxonomies)) {
+        if (!is_array($taxonomies)) {
             return;
         }
         $this->taxonomies = $taxonomies;
@@ -169,6 +169,17 @@ class PostsRenderer extends PostTypePostsRenderer
             $metas['post_date'] = false;
         }
         return $metas;
+    }
+
+    /**
+     * Check WordPress query have posts or not
+     */
+    public function hasContent() {
+        $wp_query = $this->generateWordPressQuery();
+        if (is_a($wp_query, WP_Query::class)) {
+            return $wp_query->have_posts();
+        }
+        return false;
     }
 
     public function render()
