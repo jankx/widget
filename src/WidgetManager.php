@@ -1,7 +1,7 @@
 <?php
 namespace Jankx\Widget;
 
-use Jankx\Option\Option;
+use Jankx\Option\Framework;
 use Jankx\Widget\Widgets\Posts;
 use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;
 use Jankx\Widget\Widgets\CollapaseNavMenu;
@@ -33,7 +33,8 @@ class WidgetManager
         register_widget(Socials::class);
         register_widget(ToogleNavMenu::class);
 
-        if (apply_filters('jankx_widget_enable_facebook_widgets', Option::get('facebook_app_id'))) {
+        $optionFramework = Framework::getActiveFramework();
+        if (apply_filters('jankx_widget_enable_facebook_widgets', $optionFramework->getOption('facebook_app_id'))) {
             register_widget(FacebookPagePlugin::class);
         }
     }
