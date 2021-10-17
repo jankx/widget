@@ -1,10 +1,14 @@
 <?php
 namespace Jankx\Widget\Renderers;
 
+use Jankx\TemplateEngine\Engine;
 use Jankx\Widget\Constracts\Renderer;
+use Jankx\TemplateAndLayout;
 
 abstract class Base implements Renderer
 {
+    protected $templateEngine;
+
     protected $options = array();
     protected $layoutOptions = array();
 
@@ -61,5 +65,20 @@ abstract class Base implements Renderer
             $renderer = new static();
         }
         return $renderer->setOptions($args);
+    }
+
+    public function setTemplateEngine($templateEngine)
+    {
+        if (is_a($templateEngine, Engine::class)) {
+            $this->templateEngine = &$templateEngine;
+        }
+    }
+
+    public function loadTemplate($templateName, $data = array(), $echo = false)
+    {
+        if (is_null($this->templateEngine)) {
+            $this->templateEngine = TemplateAndLayout::getTemplateEngine();
+        }
+        return $this->templateEngine->render($templateName, $data, $echo);
     }
 }

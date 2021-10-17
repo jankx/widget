@@ -174,7 +174,8 @@ class PostsRenderer extends PostTypePostsRenderer
     /**
      * Check WordPress query have posts or not
      */
-    public function hasContent() {
+    public function hasContent()
+    {
         $wp_query = $this->generateWordPressQuery();
         if (is_a($wp_query, WP_Query::class)) {
             return $wp_query->have_posts();
