@@ -82,7 +82,8 @@ class LinkTab
         return $this->attributes;
     }
 
-    public function getLinkAttributes() {
+    public function getLinkAttributes()
+    {
         $attributes = array();
 
         if ($this->isExternal) {
