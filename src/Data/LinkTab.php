@@ -79,14 +79,20 @@ class LinkTab
 
     public function getAttributes()
     {
+        return $this->attributes;
+    }
+
+    public function getLinkAttributes() {
+        $attributes = array();
+
         if ($this->isExternal) {
-            $this->attributes['target'] = '_blank';
+            $attributes['target'] = '_blank';
         }
         if ($this->nofollow) {
-            $this->attributes['rel'] = 'nofollow';
+            $attributes['rel'] = 'nofollow';
         }
 
-        return $this->attributes;
+        return $attributes;
     }
 
     public function setActive($isActive)
