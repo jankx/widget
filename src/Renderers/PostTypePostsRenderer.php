@@ -36,8 +36,9 @@ class PostTypePostsRenderer extends Base
 
     protected function generateWordPressQuery()
     {
+        $postType = array_get($this->options, 'post_type', 'post');
         $args = array(
-            'post_type' => array_get($this->options, 'post_type', 'post'),
+            'post_type' => $postType,
             'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
         );
 
@@ -54,7 +55,7 @@ class PostTypePostsRenderer extends Base
             $args['meta_query'][] = $featuredMetaQuery;
         }
 
-        return new WP_Query($args);
+        return new WP_Query(apply_filters("jankx/{$postType}/query/args", $args, $this));
     }
 
     public function render()
