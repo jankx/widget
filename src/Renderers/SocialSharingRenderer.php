@@ -5,6 +5,11 @@ class SocialSharingRenderer extends Base
 {
     public function render()
     {
-        return 'social sharing';
+        jankx_social_share_buttons(array(
+            'fbButton' => 'Facebook',
+            'tw' => 'Twitter',
+            'pinterest' => 'Pinterest',
+            'linkedin' => 'Linkedin',
+        ));
     }
 }
