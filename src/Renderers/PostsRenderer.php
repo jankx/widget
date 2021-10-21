@@ -76,6 +76,28 @@ class PostsRenderer extends PostTypePostsRenderer
                         if ($queried_object->post_type === 'post') {
                             $this->categories = wp_get_post_terms($queried_object->ID, 'category', array('fields' => 'ids'));
                             $this->tags = wp_get_post_terms($queried_object->ID, 'post_tag', array('fields' => 'ids'));
+                        } else {
+                            $taxonomies = get_post_taxonomies($queried_object->ID);
+
+                            // Exclude Polylang taxonomy
+                            $ignoreTaxonomies = apply_filters('jankx/post/related/args/taxonomies/ignore', array(
+                                'language',
+                                'post_translations'
+                            ));
+
+                            foreach($taxonomies as $taxonomy) {
+                                if (in_array($taxonomy, $ignoreTaxonomies)) {
+                                    continue;
+                                }
+                                $taxonomy_ids = wp_get_post_terms($queried_object->ID, $taxonomy, array(
+                                    'fields' => 'ids'
+                                ));
+                                $args['tax_query'][] = array(
+                                    'taxonomy' => $taxonomy,
+                                    'field' => 'term_id',
+                                    'terms' => $taxonomy_ids,
+                                );
+                            }
                         }
                     }
                     break;
