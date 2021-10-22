@@ -10,6 +10,11 @@ class SocialSharingRenderer extends Base
             'tw' => 'Twitter',
             'pinterest' => 'Pinterest',
             'linkedin' => 'Linkedin',
+            'whatsapp' => 'WhatsApp',
+            'viber' => 'Viber',
+            'email' => 'Email',
+            'telegram' => 'Telegram',
+            'line' => 'Line'
         ));
     }
 }
