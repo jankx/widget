@@ -15,6 +15,7 @@ class PostTypePostsRenderer extends Base
         'layout' => 'card',
         'post_type' => 'post',
         'posts_per_page' => 10,
+        'data_type' => 'recents',
     );
     protected $layoutOptions = array(
         'columns' => 4
@@ -47,7 +48,7 @@ class PostTypePostsRenderer extends Base
             'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
         );
 
-        if ($this->featuredMetaKey) {
+        if (array_get($this->options, 'data_type') === 'featured' && $this->featuredMetaKey) {
             $featuredMetaQuery = array(
                 'key' => $this->featuredMetaKey,
             );
@@ -71,6 +72,7 @@ class PostTypePostsRenderer extends Base
         }
 
         $wp_query = $this->generateWordPressQuery();
+
         $layout = $postLayoutManager->createLayout(
             array_get($this->options, 'layout', Card::LAYOUT_NAME),
             $wp_query
