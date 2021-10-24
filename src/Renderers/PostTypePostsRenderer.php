@@ -35,6 +35,30 @@ class PostTypePostsRenderer extends Base
         }
     }
 
+    protected function createDataTypeArgs($args) {
+        switch(array_get($this->options, 'data_type')) {
+            case 'featured':
+                if ($this->featuredMetaKey) {
+                    $featuredMetaQuery = array(
+                        'key' => $this->featuredMetaKey,
+                    );
+                    if (empty($this->featuredMetaValue)) {
+                        $featuredMetaQuery['compare'] = 'EXISTS';
+                    } else {
+                        $featuredMetaQuery['value'] = $this->featuredMetaValue;
+                        $featuredMetaQuery['compare'] = '=';
+                    }
+                    $args['meta_query'][] = $featuredMetaQuery;
+                }
+                break;
+            case 'recents':
+                $args['orderby'] = 'date';
+                $args['order'] = 'DESC';
+                break;
+        }
+        return $args;
+    }
+
     protected function generateWordPressQuery()
     {
         $postType = array_get($this->options, 'post_type', 'post');
@@ -48,18 +72,7 @@ class PostTypePostsRenderer extends Base
             'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
         );
 
-        if (array_get($this->options, 'data_type') === 'featured' && $this->featuredMetaKey) {
-            $featuredMetaQuery = array(
-                'key' => $this->featuredMetaKey,
-            );
-            if (empty($this->featuredMetaValue)) {
-                $featuredMetaQuery['compare'] = 'EXISTS';
-            } else {
-                $featuredMetaQuery['value'] = $this->featuredMetaValue;
-                $featuredMetaQuery['compare'] = '=';
-            }
-            $args['meta_query'][] = $featuredMetaQuery;
-        }
+        $args  = $this->createDataTypeArgs($args);
 
         return new WP_Query(apply_filters("jankx/{$postType}/query/args", $args, $this));
     }
