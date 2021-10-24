@@ -37,6 +37,11 @@ class PostTypePostsRenderer extends Base
     protected function generateWordPressQuery()
     {
         $postType = array_get($this->options, 'post_type', 'post');
+        $preQuery = apply_filters("jankx/{$postType}/pre/query", null, $this);
+        if (is_a($preQuery, WP_Query::class)) {
+            return $preQuery;
+        }
+
         $args = array(
             'post_type' => $postType,
             'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
@@ -70,6 +75,7 @@ class PostTypePostsRenderer extends Base
             array_get($this->options, 'layout', Card::LAYOUT_NAME),
             $wp_query
         );
+
         $layout->setOptions($this->layoutOptions);
 
         return $layout->render(false);

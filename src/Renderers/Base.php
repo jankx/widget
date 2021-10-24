@@ -22,6 +22,13 @@ abstract class Base implements Renderer
         $this->options[$optionName] = $optionValue;
     }
 
+    public function __get($name)
+    {
+        if (property_exists($this, $name)) {
+            return $this->$name;
+        }
+    }
+
     public function setOptions($options)
     {
         if (is_array($options)) {
@@ -42,16 +49,25 @@ abstract class Base implements Renderer
         }
         return $this;
     }
+    public function addOption($optionName, $optionValue)
+    {
+        $this->options[$optionName] = $optionValue;
+    }
+
+    public function addLayoutOption($optionName, $optionValue)
+    {
+        $this->layoutOptions[$optionName] = $optionValue;
+    }
 
     public function setLayoutOptions($options)
     {
         if (!is_array($options)) {
             return;
         }
-        $this->layoutOptions = wp_parse_args(
-            $options,
-            $this->layoutOptions
-        );
+
+        foreach ($options as $optionName => $optionValue) {
+            $this->addLayoutOption($optionName, $optionValue);
+        }
     }
 
     public function getLayoutOptions()

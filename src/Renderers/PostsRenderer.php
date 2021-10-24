@@ -85,7 +85,7 @@ class PostsRenderer extends PostTypePostsRenderer
                                 'post_translations'
                             ));
 
-                            foreach($taxonomies as $taxonomy) {
+                            foreach ($taxonomies as $taxonomy) {
                                 if (in_array($taxonomy, $ignoreTaxonomies)) {
                                     continue;
                                 }
