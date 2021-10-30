@@ -54,6 +54,13 @@ abstract class Base implements Renderer
         $this->options[$optionName] = $optionValue;
     }
 
+    public function getOption($name, $defaultValue = null) {
+        if (isset($this->options[$name])) {
+            return $this->options[$name];
+        }
+        return $defaultValue;
+    }
+
     public function addLayoutOption($optionName, $optionValue)
     {
         $this->layoutOptions[$optionName] = $optionValue;
@@ -73,6 +80,13 @@ abstract class Base implements Renderer
     public function getLayoutOptions()
     {
         return $this->layoutOptions;
+    }
+
+    public function getLayoutOption($name, $defaultValue = null) {
+        if (isset($this->layoutOptions[$name])) {
+            return $this->layoutOptions[$name];
+        }
+        return $defaultValue;
     }
 
     public static function prepare($args, $renderer = null)
