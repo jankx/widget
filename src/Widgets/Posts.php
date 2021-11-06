@@ -25,6 +25,7 @@ class Posts extends WP_Widget
         $postsRenderer = PostsRenderer::prepare(array(
             'posts_per_page' => array_get($instance, 'posts_per_page', 5),
             'thumbnail_position' => array_get($instance, 'thumbnail_position', 5),
+            'thumbnail_size' => array_get($instance, 'thumbnail_size', 'medium_large'),
             'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
             'columns'  => array_get($instance, 'columns', 4),
             'rows'  => array_get($instance, 'rows', 1),
@@ -62,6 +63,45 @@ class Posts extends WP_Widget
             $postTypes[$postType] = $object->label;
         }
         return $postTypes;
+    }
+
+    protected function getImageSizeName($sizeName)
+    {
+        switch ($sizeName) {
+            case 'thumbnail':
+                return __('Thumbnail');
+            case 'medium':
+                return __('Medium');
+            case 'large':
+                return __('Large');
+            default:
+                return preg_replace_callback(array(
+                    '/^(\w)/',
+                    '/(\w)([\-|_]{1,})/'
+                ), function ($matches) {
+                    if (isset($matches[2])) {
+                        return sprintf('%s ', $matches[1]) ;
+                    } elseif (isset($matches[1])) {
+                        return strtoupper($matches[1]);
+                    }
+                }, $sizeName);
+        }
+    }
+
+    protected function getImageSizes()
+    {
+        $ret = array();
+        foreach (get_intermediate_image_sizes() as $imageSize) {
+            if (apply_filters('jankx_image_size_ignore_medium_large_size', true)) {
+                if ($imageSize === 'medium_large') {
+                    continue;
+                }
+            }
+            $ret[$imageSize] = $this->getImageSizeName($imageSize);
+        }
+        $ret['full'] = __('Full size', 'jankx');
+
+        return $ret;
     }
 
     protected function get_post_layout_options($current)
@@ -157,6 +197,19 @@ class Posts extends WP_Widget
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($thumbnail_positions as $thumbnail_position => $position) : ?>
                     <option value="<?php echo $thumbnail_position; ?>" <?php echo selected($thumbnail_position, array_get($instance, 'thumbnail_position', '')); ?>><?php echo $position; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('thumbnail_size'); ?>"><?php _e('Thumbnail Size', 'jankx'); ?></label>
+            <select
+                name="<?php echo $this->get_field_name('thumbnail_size'); ?>"
+                id="<?php echo $this->get_field_id('thumbnail_size'); ?>"
+                class="widefat"
+            >
+                <option value=""><?php _e('Default'); ?></option>
+                <?php foreach ($this->getImageSizes() as $thumbnail_size => $size) : ?>
+                    <option value="<?php echo $thumbnail_size; ?>" <?php echo selected($thumbnail_size, array_get($instance, 'thumbnail_size', '')); ?>><?php echo $size; ?></option>
                 <?php endforeach; ?>
             </select>
         </p>
