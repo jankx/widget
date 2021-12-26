@@ -18,7 +18,7 @@ class PostTypePostsRenderer extends Base
         'data_type' => 'recents',
     );
     protected $layoutOptions = array(
-        'columns' => 4
+        'columns' => 4,
     );
 
     public function setFeaturedMetaKey($key)
@@ -71,6 +71,10 @@ class PostTypePostsRenderer extends Base
             'post_type' => $postType,
             'posts_per_page' => array_get($this->options, 'posts_per_page', 10),
         );
+
+        if (array_get($this->options, 'show_paginate')) {
+            $args['paged'] = get_query_var('paged', 1);
+        }
 
         $args  = $this->createDataTypeArgs($args);
 
