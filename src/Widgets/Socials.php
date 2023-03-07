@@ -3,7 +3,7 @@ namespace Jankx\Widget\Widgets;
 
 use WP_Widget;
 use Jankx;
-use Jankx\Template\Template;
+use Jankx\Widget\Renderers\SocialsRenderer;
 
 class Socials extends WP_Widget
 {
@@ -43,6 +43,8 @@ class Socials extends WP_Widget
 
     public function widget($args, $instance)
     {
+        $renderer = new SocialsRenderer();
+
         echo $args['before_widget'];
         if (isset($instance['title'])) {
             echo $args['before_title'];
@@ -50,8 +52,7 @@ class Socials extends WP_Widget
             echo $args['after_title'];
         }
 
-        $engine = Template::getEngine(Jankx::ENGINE_ID);
-        echo $engine->render('widget/socials');
+        echo $renderer->render();
 
         echo $args['after_widget'];
     }
