@@ -10,7 +10,6 @@ class Socials extends WP_Widget
     public function __construct()
     {
         $options = array(
-            'classname' => 'jankx-socials',
             'description' => __('Show your social networks from theme settings to frontend', 'jankx'),
         );
 
