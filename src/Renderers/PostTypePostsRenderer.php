@@ -35,8 +35,9 @@ class PostTypePostsRenderer extends Base
         }
     }
 
-    protected function createDataTypeArgs($args) {
-        switch(array_get($this->options, 'data_type')) {
+    protected function createDataTypeArgs($args)
+    {
+        switch (array_get($this->options, 'data_type')) {
             case 'featured':
                 if ($this->featuredMetaKey) {
                     $featuredMetaQuery = array(

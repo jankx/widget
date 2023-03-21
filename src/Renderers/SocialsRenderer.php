@@ -9,62 +9,131 @@ class SocialsRenderer extends Base
 {
     protected $options = [
         'icon-style' => 'regular',
-        'html-type' => 'svg'
+        'icon-type' => 'file'
     ];
 
-    protected function getIcons() {
-        $icons = [
-            'facebook' => 'icons/facebook.svg',
-            'twitter' => 'icons/twitter.svg',
-            'instgram' => 'icons/instagram.svg',
-            'tiktok' => 'icons/tiktok.svg',
-            'youtube' => 'icons/youtube.svg'
-        ];
+    protected function getIcons()
+    {
+        $icons = [];
 
-        $fontIcons = [
-            'facebook' => 'fa-brands fa-facebook',
-            'twitter' => 'fa-brands fa-twitter',
-            'instagram' => 'fa-brands fa-instagram',
-            'tiktok' => 'fa-brands fa-tiktok',
-            'youtube' => 'fa-brands fa-youtube'
+        $iconDirectories = [
+            implode(DIRECTORY_SEPARATOR, [get_template_directory(), 'assets', 'icons', 'socials']),
         ];
+        if (is_child_theme()) {
+            $iconDirectories[] = implode(DIRECTORY_SEPARATOR, [get_stylesheet_directory(), 'assets', 'icons', 'socials']);
+        }
 
-        return apply_filters('jankx/socials/icons', [
-            'svg' => $icons,
-            'font' => $fontIcons,
-        ]);
+        foreach ($iconDirectories as $iconDirectory) {
+            if (PHP_OS === 'WINNT') {
+                $iconDirectory = str_replace('/', DIRECTORY_SEPARATOR, $iconDirectory);
+            }
+            foreach (glob($iconDirectory . '/*.{png,gif,jpeg,jpg,svg}', GLOB_BRACE) as $iconFile) {
+                $iconInfos = pathinfo($iconFile);
+                if (empty($iconInfos)) {
+                    continue;
+                }
+
+                $icon = [
+                    'path' => $iconFile,
+                    'type' => $iconInfos['extension'],
+                ];
+                if ($this->getIconType() === 'font') {
+                    $icon = $this->resolveIconFont($icon, $iconInfos);
+                }
+                $icons[$iconInfos['filename']] = $icon;
+            }
+        }
+
+        return apply_filters('jankx/socials/icons', $icons);
     }
 
-    protected function resolveIcon($name, $listIcons, $type) {}
 
-    public static function getIconType() {
-        return apply_filters('jankx/socials/icons/style', 'font');
+    protected function resolveIconFont($currentIcon, $iconInfos)
+    {
+        /**
+         * Default font is Fontwesome 6
+         * Reference: https://fontawesome.com/search?f=brands&o=r
+         */
+        $fontPrefix = apply_filters(
+            'jankx/socials/icons/font',
+            'fab fa-',
+            $currentIcon,
+            $iconInfos
+        );
+
+        return [
+            'font' => $fontPrefix . $iconInfos['filename'],
+        ];
     }
 
-    public function render() {
+
+    protected function resolveIcon($name, $listIcons, $svgContentIfAvailable)
+    {
+        if (!isset($listIcons[$name])) {
+            return $name;
+        }
+
+        $socialInfo = $listIcons[$name];
+        if (isset($socialInfo['font'])) {
+            return $socialInfo['font'];
+        }
+        if (!($socialInfo['type'] === 'svg' && $svgContentIfAvailable)) {
+            return [
+                'type' => 'image',
+                'url' => jankx_get_path_url($socialInfo['path']),
+            ];
+        }
+
+        return [
+            'type' => 'html',
+            'html' => file_get_contents($socialInfo['path'])
+        ];
+    }
+
+    public function getIconType()
+    {
+        return apply_filters(
+            'jankx/socials/icons/style',
+            $this->getOption('icon-type', 'file')
+        );
+    }
+
+    public function render()
+    {
         $engine = Template::getEngine(Jankx::ENGINE_ID);
+        $svgContentIfAvailable = apply_filters('jankx/socials/icons/svg/enabled', true);
 
         $socials        = [];
         $socialIcons    = $this->getIcons();
-        $socialSupports = apply_filters('jankx/socials/list', ['facebook', 'twitter', 'instagram', 'youtube', 'tiktok']);
+        $socialSupports = apply_filters(
+            'jankx/socials/list',
+            array_unique(array_keys($socialIcons))
+        );
 
-        foreach($socialSupports as $socialName) {
-            $optionKey = sprintf('%s_url', $socialName);
+        foreach ($socialSupports as $socialName) {
+            $optionKey = sprintf('%s_url', str_replace('-', '_', $socialName));
             $value = Helper::getOption($optionKey);
             if (!empty($value)) {
                 $socials[$socialName]['url'] = $value;
-                $socials[$socialName]['icon'] = $this->resolveIcon($socialName, $socialIcons, static::getIconType());
+                $socials[$socialName]['icon'] = $this->resolveIcon($socialName, $socialIcons, $svgContentIfAvailable);
                 $socials[$socialName]['target'] = '_blank';
             }
         }
 
-        $templateFile = static::getIconType() == 'font' ? 'widget/socials' : 'widget/socials-type-image';
+        /**
+         * Template of font icons
+         */
+        $templateFile = 'socials/connects';
+
+        if ($this->getIconType() === 'file') {
+            $templateFile = 'socials/icon-file-connects';
+        }
 
         echo $engine->render(
             $templateFile,
             [
                 'socials' => apply_filters('jankx/socials/data', $socials, $socialSupports, $socialIcons),
-                'icon_type' => static::getIconType(),
+                'svg_content_if_available' => $svgContentIfAvailable,
             ]
         );
     }
