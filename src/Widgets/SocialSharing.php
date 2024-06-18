@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Widgets;
 
 use WP_Widget;

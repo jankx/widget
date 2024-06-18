@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Renderers;
 
 class SocialSharingRenderer extends Base

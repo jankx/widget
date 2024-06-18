@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Renderers;
 
 use Jankx\TemplateEngine\Engine;

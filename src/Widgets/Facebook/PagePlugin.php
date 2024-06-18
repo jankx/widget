@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Widgets\Facebook;
 
 use WP_Widget;

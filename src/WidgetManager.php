@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget;
 
 use Jankx\Option\Framework;

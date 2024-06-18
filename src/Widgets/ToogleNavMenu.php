@@ -1,9 +1,9 @@
 <?php
+
 namespace Jankx\Widget\Widgets;
 
 use WP_Widget;
 use Jankx;
-use Jankx\GlobalVariables;
 
 class ToogleNavMenu extends WP_Widget
 {

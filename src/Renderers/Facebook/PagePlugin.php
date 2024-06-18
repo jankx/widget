@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Renderers\Facebook;
 
 use Jankx\Widget\Renderers\FacebookRenderer;

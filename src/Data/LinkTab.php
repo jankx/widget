@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\Widget\Data;
 
 class LinkTab
@@ -98,7 +99,7 @@ class LinkTab
 
     public function setActive($isActive)
     {
-        $this->isActive = (boolean) $isActive;
+        $this->isActive = (bool) $isActive;
     }
 
     public function isActive()
