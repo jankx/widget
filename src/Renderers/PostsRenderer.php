@@ -147,7 +147,7 @@ class PostsRenderer extends PostTypePostsRenderer
                 $args['tag__in'] = $this->tags;
             }
 
-            if (($post_format = array_get($this->options, 'post_format', 'standard')) !== 'standard') {
+            if (!in_array($post_format = array_get($this->options, 'post_format', 'standard'), ['standard', null])) {
                 $args['tax_query'][] = array(
                     'taxonomy' => 'post_format',
                     'field' => 'slug',
