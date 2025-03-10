@@ -10,13 +10,21 @@ class ToogleNavMenu extends WP_Widget
     public function __construct()
     {
         $options = array(
-            'name' => sprintf(__('%s Toggle Menu', 'jankx'), Jankx::templateName()),
+            'name' => sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Toogle Menu', 'jankx')
+            ),
             'classname' => 'widget_nav_menu widget-jankx-collapase-menu'
         );
 
         return parent::__construct(
             'jankx_collapase_menu',
-            __('Toogle Menu', 'jankx'),
+            sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Toogle Menu', 'jankx')
+            ),
             $options
         );
     }

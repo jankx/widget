@@ -16,7 +16,11 @@ class CollapaseNavMenu extends WP_Widget
 
         return parent::__construct(
             'jankx_collapase_menu',
-            __('Collapase Menu', 'jankx'),
+            sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Collapase Menu', 'jankx')
+            ),
             $options
         );
     }

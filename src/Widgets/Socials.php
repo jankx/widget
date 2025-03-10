@@ -17,7 +17,7 @@ class Socials extends WP_Widget
         parent::__construct(
             'jankx_socials',
             sprintf(
-                '%s %s',
+                '&lt;%s&gt; %s',
                 Jankx::templateName(),
                 __('Socials', 'jankx')
             ),

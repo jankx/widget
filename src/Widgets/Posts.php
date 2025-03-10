@@ -2,6 +2,7 @@
 
 namespace Jankx\Widget\Widgets;
 
+use Jankx;
 use WP_Widget;
 use Jankx\Widget\Renderers\PostsRenderer;
 use Jankx\PostLayout\PostLayoutManager;
@@ -16,7 +17,11 @@ class Posts extends WP_Widget
         );
         parent::__construct(
             'jankx_posts',
-            sprintf(__('%s Posts', 'jankx'), \Jankx::templateName()),
+            sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Posts')
+            ),
             $options
         );
     }
@@ -28,9 +33,9 @@ class Posts extends WP_Widget
             'thumbnail_position' => array_get($instance, 'thumbnail_position', 5),
             'thumbnail_size' => array_get($instance, 'thumbnail_size', 'medium_large'),
             'show_postdate' => array_get($instance, 'show_post_date', 'no') === 'yes',
-            'columns'  => array_get($instance, 'columns', 4),
-            'rows'  => array_get($instance, 'rows', 1),
-            'show_dot'  => array_get($instance, 'show_carousel_pagination', 'no') === 'yes',
+            'columns' => array_get($instance, 'columns', 4),
+            'rows' => array_get($instance, 'rows', 1),
+            'show_dot' => array_get($instance, 'show_carousel_pagination', 'no') === 'yes',
             'post_type' => array_get($instance, 'post_type'),
             'data_preset' => array_get($instance, 'data_preset'),
         ));
@@ -49,7 +54,7 @@ class Posts extends WP_Widget
             echo $instance['title'];
             echo array_get($args, 'after_title');
         }
-            echo $content;
+        echo $content;
         echo array_get($args, 'after_widget');
     }
 
@@ -81,7 +86,7 @@ class Posts extends WP_Widget
                     '/(\w)([\-|_]{1,})/'
                 ), function ($matches) {
                     if (isset($matches[2])) {
-                        return sprintf('%s ', $matches[1]) ;
+                        return sprintf('%s ', $matches[1]);
                     } elseif (isset($matches[1])) {
                         return strtoupper($matches[1]);
                     }
@@ -113,11 +118,8 @@ class Posts extends WP_Widget
         ?>
         <p>
             <label for="<?php echo $this->get_field_id('post_layout'); ?>"><?php _e('Post Layouts', 'jankx'); ?></label>
-            <select
-                name="<?php echo $this->get_field_name('post_layout'); ?>"
-                id="<?php echo $this->get_field_id('post_layout'); ?>"
-                class="widefat"
-            >
+            <select name="<?php echo $this->get_field_name('post_layout'); ?>"
+                id="<?php echo $this->get_field_id('post_layout'); ?>" class="widefat">
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($layouts as $layout => $name) : ?>
                     <option value="<?php echo $layout; ?>" <?php echo selected($layout, $current); ?>><?php echo $name; ?></option>
@@ -153,21 +155,13 @@ class Posts extends WP_Widget
         ?>
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title'); ?></label>
-            <input
-                type="text"
-                class="widefat"
-                id="<?php echo $this->get_field_id('title'); ?>"
-                name="<?php echo $this->get_field_name('title'); ?>"
-                value="<?php echo array_get($instance, 'title'); ?>"
-            />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+                name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo array_get($instance, 'title'); ?>" />
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('post_type'); ?>"><?php _e('Post Type', 'jankx'); ?></label>
-            <select
-                name="<?php echo $this->get_field_name('post_type'); ?>"
-                id="<?php echo $this->get_field_id('post_type'); ?>"
-                class="widefat"
-            >
+            <select name="<?php echo $this->get_field_name('post_type'); ?>"
+                id="<?php echo $this->get_field_id('post_type'); ?>" class="widefat">
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($this->getPostTypes($instance) as $post_type => $post_type_label) : ?>
                     <option value="<?php echo $post_type; ?>" <?php echo selected($post_type, array_get($instance, 'post_type', '')); ?>><?php echo $post_type_label; ?></option>
@@ -176,11 +170,8 @@ class Posts extends WP_Widget
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('data_preset'); ?>"><?php _e('Data Preset', 'jankx'); ?></label>
-            <select
-                name="<?php echo $this->get_field_name('data_preset'); ?>"
-                id="<?php echo $this->get_field_id('data_preset'); ?>"
-                class="widefat"
-            >
+            <select name="<?php echo $this->get_field_name('data_preset'); ?>"
+                id="<?php echo $this->get_field_id('data_preset'); ?>" class="widefat">
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($this->getDataPresets($instance) as $data_preset => $position) : ?>
                     <option value="<?php echo $data_preset; ?>" <?php echo selected($data_preset, array_get($instance, 'data_preset', '')); ?>><?php echo $position; ?></option>
@@ -189,12 +180,10 @@ class Posts extends WP_Widget
         </p>
         <?php $this->get_post_layout_options(array_get($instance, 'post_layout')); ?>
         <p>
-            <label for="<?php echo $this->get_field_id('thumbnail_position'); ?>"><?php _e('Thumbnail Position', 'jankx'); ?></label>
-            <select
-                name="<?php echo $this->get_field_name('thumbnail_position'); ?>"
-                id="<?php echo $this->get_field_id('thumbnail_position'); ?>"
-                class="widefat"
-            >
+            <label
+                for="<?php echo $this->get_field_id('thumbnail_position'); ?>"><?php _e('Thumbnail Position', 'jankx'); ?></label>
+            <select name="<?php echo $this->get_field_name('thumbnail_position'); ?>"
+                id="<?php echo $this->get_field_id('thumbnail_position'); ?>" class="widefat">
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($thumbnail_positions as $thumbnail_position => $position) : ?>
                     <option value="<?php echo $thumbnail_position; ?>" <?php echo selected($thumbnail_position, array_get($instance, 'thumbnail_position', '')); ?>><?php echo $position; ?></option>
@@ -203,11 +192,8 @@ class Posts extends WP_Widget
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('thumbnail_size'); ?>"><?php _e('Thumbnail Size', 'jankx'); ?></label>
-            <select
-                name="<?php echo $this->get_field_name('thumbnail_size'); ?>"
-                id="<?php echo $this->get_field_id('thumbnail_size'); ?>"
-                class="widefat"
-            >
+            <select name="<?php echo $this->get_field_name('thumbnail_size'); ?>"
+                id="<?php echo $this->get_field_id('thumbnail_size'); ?>" class="widefat">
                 <option value=""><?php _e('Default'); ?></option>
                 <?php foreach ($this->getImageSizes() as $thumbnail_size => $size) : ?>
                     <option value="<?php echo $thumbnail_size; ?>" <?php echo selected($thumbnail_size, array_get($instance, 'thumbnail_size', '')); ?>><?php echo $size; ?></option>
@@ -216,54 +202,32 @@ class Posts extends WP_Widget
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('show_post_date') ?>">
-                <input
-                    type="checkbox"
-                    id="<?php echo $this->get_field_id('show_post_date') ?>"
-                    name="<?php echo $this->get_field_name('show_post_date'); ?>"
-                    <?php checked('yes', array_get($instance, 'show_post_date', 'no')); ?>
-                    value="yes"
-                />
+                <input type="checkbox" id="<?php echo $this->get_field_id('show_post_date') ?>"
+                    name="<?php echo $this->get_field_name('show_post_date'); ?>" <?php checked('yes', array_get($instance, 'show_post_date', 'no')); ?> value="yes" />
                 <?php _e('Show post date', 'jankx'); ?>
             </label>
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('posts_per_page') ?>"><?php _e('Number of items', 'jankx'); ?></label>
-            <input
-                type="number"
-                id="<?php echo $this->get_field_id('posts_per_page') ?>"
+            <input type="number" id="<?php echo $this->get_field_id('posts_per_page') ?>"
                 name="<?php echo $this->get_field_name('posts_per_page'); ?>"
-                value="<?php echo array_get($instance, 'posts_per_page', 5) ?>"
-            />
+                value="<?php echo array_get($instance, 'posts_per_page', 5) ?>" />
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('columns') ?>"><?php _e('Columns', 'jankx'); ?></label>
-            <input
-                type="number"
-                class="widefat"
-                id="<?php echo $this->get_field_id('columns') ?>"
+            <input type="number" class="widefat" id="<?php echo $this->get_field_id('columns') ?>"
                 name="<?php echo $this->get_field_name('columns'); ?>"
-                value="<?php echo array_get($instance, 'columns', 5) ?>"
-            />
+                value="<?php echo array_get($instance, 'columns', 5) ?>" />
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('rows') ?>"><?php _e('Rows', 'jankx'); ?></label>
-            <input
-                type="number"
-                class="widefat"
-                id="<?php echo $this->get_field_id('rows') ?>"
-                name="<?php echo $this->get_field_name('rows'); ?>"
-                value="<?php echo array_get($instance, 'rows', 5) ?>"
-            />
+            <input type="number" class="widefat" id="<?php echo $this->get_field_id('rows') ?>"
+                name="<?php echo $this->get_field_name('rows'); ?>" value="<?php echo array_get($instance, 'rows', 5) ?>" />
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('show_carousel_pagination') ?>">
-                <input
-                    type="checkbox"
-                    id="<?php echo $this->get_field_id('show_carousel_pagination') ?>"
-                    name="<?php echo $this->get_field_name('show_carousel_pagination'); ?>"
-                    <?php checked('yes', array_get($instance, 'show_carousel_pagination', 'no')); ?>
-                    value="yes"
-                />
+                <input type="checkbox" id="<?php echo $this->get_field_id('show_carousel_pagination') ?>"
+                    name="<?php echo $this->get_field_name('show_carousel_pagination'); ?>" <?php checked('yes', array_get($instance, 'show_carousel_pagination', 'no')); ?> value="yes" />
                 <?php _e('Show slide pagination', 'jankx'); ?>
             </label>
         </p>

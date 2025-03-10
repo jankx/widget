@@ -2,6 +2,7 @@
 
 namespace Jankx\Widget\Widgets;
 
+use Jankx;
 use WP_Widget;
 
 class CustomFields extends WP_Widget
@@ -9,10 +10,18 @@ class CustomFields extends WP_Widget
     public function __construct()
     {
         $options = array(
-            'name' => __('Custom Fields', 'jankx'),
+            'name' => sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Custom Fields', 'jankx')
+            ),
             'classname' => 'jankx_customfields',
         );
-        parent::__construct('jankx_custom_fields', __('Custom Fields', 'jankx'), $options);
+        parent::__construct('jankx_custom_fields', sprintf(
+            '&lt;%s&gt; %s',
+            Jankx::templateName(),
+            __('Custom Fields', 'jankx')
+        ), $options);
     }
 
     public function form($args)

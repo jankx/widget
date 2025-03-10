@@ -2,6 +2,7 @@
 
 namespace Jankx\Widget\Widgets\Facebook;
 
+use Jankx;
 use WP_Widget;
 use Jankx\Widget\Renderers\Facebook\PagePlugin as PagePluginRenderer;
 
@@ -19,7 +20,11 @@ class PagePlugin extends WP_Widget
         );
         parent::__construct(
             static::WIDGET_ID,
-            __('Facebook Page Plugin', 'jankx'),
+            sprintf(
+                '&lt;%s&gt; %s',
+                Jankx::templateName(),
+                __('Facebook Page Plugin', 'jankx')
+            ),
             $options
         );
         $this->renderer = new PagePluginRenderer();
