@@ -11,7 +11,7 @@ class SocialSharingRenderer extends Base
             return $pre;
         }
 
-        jankx_social_share_buttons(array(
+        $buttons = apply_filters('jankx/socials/sharing/buttons', array(
             'fbButton' => 'Facebook',
             'tw' => 'Twitter',
             'pinterest' => 'Pinterest',
@@ -22,5 +22,7 @@ class SocialSharingRenderer extends Base
             'telegram' => 'Telegram',
             'line' => 'Line'
         ));
+
+        jankx_social_share_buttons($buttons);
     }
 }
