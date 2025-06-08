@@ -3,11 +3,13 @@
 namespace Jankx\Widget\Renderers;
 
 use Jankx;
-use Jankx\Option\Helper;
+use Jankx\Adapter\Options\Helper;
 use Jankx\Template\Template;
 
 class SocialsRenderer extends Base
 {
+    protected $iconFontPrefix = 'fa fa-';
+
     protected $options = [
         'icon-style' => 'regular',
         'icon-type' => 'file'
@@ -56,8 +58,8 @@ class SocialsRenderer extends Base
          * Reference: https://fontawesome.com/search?f=brands&o=r
          */
         $fontPrefix = apply_filters(
-            'jankx/socials/icons/font',
-            'fab fa-',
+            'jankx/socials/icons/font/prefix',
+            $this->iconFontPrefix,
             $currentIcon,
             $iconInfos
         );
@@ -113,12 +115,14 @@ class SocialsRenderer extends Base
 
         foreach ($socialSupports as $socialName) {
             $optionKey = sprintf('%s_url', str_replace('-', '_', $socialName));
-            $value = Helper::getOption($optionKey);
-            if (!empty($value)) {
-                $socials[$socialName]['url'] = $value;
-                $socials[$socialName]['icon'] = $this->resolveIcon($socialName, $socialIcons, $svgContentIfAvailable);
-                $socials[$socialName]['target'] = '_blank';
-            }
+            $value = Helper::getOption(
+                $optionKey,
+                apply_filters("jankx/social/{$socialName}/url/default", '')
+            );
+
+            $socials[$socialName]['url'] = $value;
+            $socials[$socialName]['icon'] = $this->resolveIcon($socialName, $socialIcons, $svgContentIfAvailable);
+            $socials[$socialName]['target'] = '_blank';
         }
 
         /**
@@ -133,7 +137,7 @@ class SocialsRenderer extends Base
         echo $engine->render(
             $templateFile,
             [
-                'socials' => apply_filters('jankx/socials/data', $socials, $socialSupports, $socialIcons),
+                'socials' => apply_filters('jankx/social/networks', $socials, $socialSupports, $socialIcons),
                 'svg_content_if_available' => $svgContentIfAvailable,
             ]
         );
