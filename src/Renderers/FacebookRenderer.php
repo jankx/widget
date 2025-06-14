@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Option\Option;
 
 abstract class FacebookRenderer extends Base

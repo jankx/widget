@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class SocialSharingRenderer extends Base
 {
     public function render()

@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Widget\Renderers\Base;
 
 class LinkTabsRenderer extends Base

@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Adapter\Options\Framework;
 use Jankx\Widget\Widgets\Posts;
 use Jankx\Widget\Widgets\Facebook\PagePlugin as FacebookPagePlugin;

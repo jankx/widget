@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use WP_Query;
 use Jankx\PostLayout\PostLayoutManager;
 use Jankx\TemplateAndLayout;

@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Widgets\Facebook;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx;
 use WP_Widget;
 use Jankx\Widget\Renderers\Facebook\PagePlugin as PagePluginRenderer;

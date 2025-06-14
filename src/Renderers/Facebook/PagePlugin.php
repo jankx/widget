@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers\Facebook;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\Widget\Renderers\FacebookRenderer;
 
 class PagePlugin extends FacebookRenderer

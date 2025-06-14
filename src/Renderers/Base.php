@@ -2,6 +2,10 @@
 
 namespace Jankx\Widget\Renderers;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\TemplateEngine\Engine;
 use Jankx\Widget\Constracts\Renderer;
 use Jankx\TemplateAndLayout;
