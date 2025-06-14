@@ -3,7 +3,7 @@
 namespace Jankx\Widget;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 class Filter

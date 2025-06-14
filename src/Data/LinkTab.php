@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Data;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 class LinkTab

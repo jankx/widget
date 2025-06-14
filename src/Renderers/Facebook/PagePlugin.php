@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Renderers\Facebook;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx\Widget\Renderers\FacebookRenderer;

@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Renderers;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 class SocialSharingRenderer extends Base

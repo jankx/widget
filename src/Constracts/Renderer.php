@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Constracts;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 interface Renderer

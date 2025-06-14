@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Widgets\Facebook;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx;

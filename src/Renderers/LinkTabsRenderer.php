@@ -3,7 +3,7 @@
 namespace Jankx\Widget\Renderers;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use Jankx\Widget\Renderers\Base;
